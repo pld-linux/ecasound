@@ -11,12 +11,12 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.3.1
+Version:	2.3.2
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	03729504e65bb1110a6dc7ff19ffa01c
+# Source0-md5:	624ea41e87dc0cca73cf2057c053d4a7
 Patch0:		%{name}-link.patch
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	arts-devel}
@@ -25,14 +25,18 @@ BuildRequires:	automake
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
 BuildRequires:	ladspa-devel
 BuildRequires:	libsamplerate-devel
+BuildRequires:	libsndfile-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
+BuildRequires:	ruby
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		ruby_sitelibdir	%(ruby -r rbconfig -e 'print Config::CONFIG["sitelibdir"]')
 
 %description
 Ecasound is a software package designed for multitrack audio
@@ -106,6 +110,18 @@ Python module for Ecasound.
 
 %description -n python-%{name} -l pl
 Modu³ jêzyka Python dla programu ecasound.
+
+%package -n ruby-%{name}
+Summary:	Ruby module for Ecasound
+Summary(pl):	Modu³ jêzyka Ruby dla programu ecasound
+Group:		Libraries
+%requires_eq	ruby
+
+%description -n ruby-%{name}
+Ruby module for Ecasound.
+
+%description -n ruby-%{name} -l pl
+Modu³ jêzyka Ruby dla programu ecasound.
 
 %prep
 %setup -q
@@ -182,3 +198,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/*.so
 %{py_sitedir}/*.py[co]
+
+%files -n ruby-%{name}
+%defattr(644,root,root,755)
+%{ruby_sitelibdir}/ecasound.rb
