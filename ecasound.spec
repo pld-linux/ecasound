@@ -7,7 +7,6 @@
 %if %{without alsa}
 %undefine	with_jack
 %endif
-%include	/usr/lib/rpm/macros.python
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
