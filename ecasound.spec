@@ -3,7 +3,7 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.1.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
@@ -140,7 +140,7 @@ rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
+CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -fno-rtti"
 %configure \
 	--enable-sys-readline \
 	--with-python-includes=%{py_incdir} \
