@@ -149,7 +149,7 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__install} -d $RPM_BUILD_ROOT%{py_sitedir}
+install -d $RPM_BUILD_ROOT%{py_sitedir}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
 
