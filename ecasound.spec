@@ -115,7 +115,7 @@ Library oraz aRts.
 Summary:	Python module for Ecasound
 Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
 Group:		Libraries/Python
-%requires_eq	python
+%pyrequires_eq	python
 
 %description -n python-%{name}
 Python module for Ecasound library.
