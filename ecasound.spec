@@ -1,14 +1,15 @@
 
 %define python_sitepkgsdir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/site-packages/')"`)
-%define python_libdynloadir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/lib-dynload/')"`)
+%define python_ver %(echo `python -c "import sys; print sys.version[:3]"`)
+%define python_basedir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3])"`)
 %define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
 %define python_compile python -c "import compileall; compileall.compile_dir('.')"
 
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	1.9dev1
-Release:	3
+Version:	2.0.1
+Release:	1
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
@@ -25,7 +26,7 @@ BuildRequires:	readline-devel >= 4.2
 BuildRequires:	alsa-lib-devel
 %endif
 BuildRequires:	audiofile-devel >= 0.2.0
-BuildRequires:	python-devel
+BuildRequires:	python-devel >= 2.1
 Requires:	lame
 Requires:	mpg123
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -130,6 +131,7 @@ Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
 Group:		Development/Languages/Python
 Group(de):	Entwicklung/Sprachen/Python
 Group(pl):	Programowanie/Jêzyki/Python
+%requires_eq	python
 
 %description -n python-%{name}
 Python module for Ecasound library.
@@ -145,13 +147,17 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 
 %build
 rm missing
+%ifarch sparc sparc64
 libtoolize --copy --force
+%endif
 aclocal
 autoconf
 automake -a -c
 CXXFLAGS="%{rpmcflags} -D_REENTRANT"
 %configure \
-	--enable-sys-readline
+	--enable-sys-readline \
+	--with-python-includes=%{_includedir}/python%{python_ver} \
+	--with-python-modules=%{python_basedir}
 %{__make}
 
 %install
@@ -205,7 +211,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libkvutils.a
 %{_libdir}/libecasound.a
-%{python_libdynloadir}/*.a
+%{python_sitepkgsdir}/*.a
 
 %files plugins
 %defattr(644,root,root,755)
@@ -216,7 +222,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{python_libdynloadir}/*.so
-%{python_libdynloadir}/pyeca.py
-%{python_sitepkgsdir}/*.pyc
-%{python_sitepkgsdir}/*.pyo
+%attr(755,root,root) %{python_sitepkgsdir}/*.so
+%{python_sitepkgsdir}/*.py[co]
