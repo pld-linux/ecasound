@@ -38,7 +38,9 @@ processing.
 Ecasound jest programem do wielo¶cie¿kowej edycji d¼wiêku, który mo¿e
 byæ u¿ywany tak do prostych zadañ typu odtwarzanie i nagrywanie muzyki
 czy te¿ konwersji pomiêdzy formatami plików muzycznych jak i do
-wielo¶cie¿kowego przetwarzania ...(TODO)...
+wielo¶cie¿kowego nak³adania efektów, miksowania (przenikania, wyciszania),
+nagrywania i odzyskiwania (w domy¶le odszumiania lub wyrzucania
+zniekszta³ceñ) sygna³u.
 
 Ecasound wspiera szerok± gamê ¼róde³ i wyj¶æ d¼wiêku oraz algorytmów
 do jego przetwarzania. Ecasound wspiera wiele wolnych (open source)
