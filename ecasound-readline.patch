@@ -1,0 +1,24 @@
+--- ecasound-1.9dev1/ecasound/eca-text.cpp~	Wed Jan 17 21:45:40 2001
++++ ecasound-1.9dev1/ecasound/eca-text.cpp	Mon Apr 23 00:04:09 2001
+@@ -48,8 +48,12 @@
+ #endif
+ 
+ #define READLINE_LIBRARY
++#undef __P
++#define __P(args) args
+ #include <readline.h>
+ #include <history.h>
++#undef __P
++#define __P(args) args __THROW
+ 
+ #include "textdebug.h"
+ #include "eca-text.h"
+@@ -301,7 +305,7 @@
+   // complete only the first command, otherwise complete files in 
+   // the current directory
+   if (start == 0)
+-    matches = completion_matches (text, (CPFunction *)ecasound_command_generator);
++    matches = rl_completion_matches (text, (CPFunction *)ecasound_command_generator);
+ 
+   return (matches);
+ }
