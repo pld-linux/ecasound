@@ -135,8 +135,10 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %setup -q
 
 %build
+aclocal
+autoconf
+automake -a -c
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti"
-automake
 %configure \
 	--enable-sys-readline
 %{__make}
