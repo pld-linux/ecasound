@@ -15,15 +15,15 @@ Patch2:		%{name}-readline.patch
 Patch3:		%{name}-am15.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool
-BuildRequires:	libstdc++-devel
-BuildRequires:	readline-devel >= 4.2
+BuildRequires:	audiofile-devel >= 0.2.0
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
 %endif
-BuildRequires:	audiofile-devel >= 0.2.0
-BuildRequires:	python-devel >= 2.1
+BuildRequires:	libtool
+BuildRequires:	libstdc++-devel
+BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
+BuildRequires:	python-devel >= 2.1
 Requires:	lame
 Requires:	mpg123
 Requires:	libecasound = %{version}
