@@ -1,7 +1,7 @@
 
 #
 # todo:
-# - jackit.sf.net
+# - jack-audio-connection-kit support
 #
 
 #
@@ -34,8 +34,11 @@ BuildRequires:	rpm-pythonprov
 Requires:	lame
 Requires:	mpg123
 # libecasound no longer supported
-Obsoletes:	perl-Audio-Ecasound.spec php-pecl-ecasound.spec
-Obsoletes:	libecasound libecasound-devel
+Obsoletes:	libecasound
+Obsoletes:	libecasound-devel
+# packages depending on libecasound
+Obsoletes:	perl-Audio-Ecasound
+Obsoletes:	php-pecl-ecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -90,7 +93,7 @@ Modu³ jêzyka Python dla programu ecasound.
 %build
 rm -f missing
 %{__libtoolize}
-aclocal
+%{__aclocal}
 %{__autoconf}
 %{__automake}
 CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
