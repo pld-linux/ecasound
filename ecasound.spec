@@ -228,7 +228,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libkvutils.a
 %{_libdir}/libecasound.a
-%{py_dyndir}/*.a
+%{py_sitedir}/*.a
 
 %files plugins
 %defattr(644,root,root,755)
