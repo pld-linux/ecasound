@@ -21,14 +21,16 @@ Patch2:		%{name}-readline.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	libstdc++-devel
 BuildRequires:	readline-devel >= 4.2
 %ifnarch sparc sparc64
-BuildRequires:	alsa-lib-devel
+%{!?_without_alsa:BuildRequires:	alsa-lib-devel}
 %endif
 BuildRequires:	audiofile-devel >= 0.2.0
 BuildRequires:	python-devel >= 2.1
 Requires:	lame
 Requires:	mpg123
+Requires:	libecasound = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -157,12 +159,14 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT"
 %configure \
 	--enable-sys-readline \
 	--with-python-includes=%{_includedir}/python%{python_ver} \
-	--with-python-modules=%{python_basedir}
+	--with-python-modules=%{python_basedir} \
+	%{?_without_alsa:--disable-alsa}
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__install} -d $RPM_BUILD_ROOT%{_libdir}/python2.0/site-packages
+%{__install} -d $RPM_BUILD_ROOT%{python_sitepkgsdir}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
 
@@ -211,7 +215,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libkvutils.a
 %{_libdir}/libecasound.a
-%{python_sitepkgsdir}/*.a
+%{python_basedir}/lib-dynload/*.a
 
 %files plugins
 %defattr(644,root,root,755)
@@ -222,5 +226,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{python_sitepkgsdir}/*.so
+%attr(755,root,root) %{python_basedir}/lib-dynload/*.so
 %{python_sitepkgsdir}/*.py[co]
