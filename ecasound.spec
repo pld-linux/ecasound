@@ -5,6 +5,7 @@ Version:	1.8.2r14
 Release:	1
 License:	GPL
 Group:		Applications/Sound
+Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 BuildRequires:	audiofile-devel >= 0.1.7
@@ -35,9 +36,9 @@ processing.
 Ecasound jest programem do wielo¶cie¿kowej edycji d¼wiêku, który mo¿e
 byæ u¿ywany tak do prostych zadañ typu odtwarzanie i nagrywanie muzyki
 czy te¿ konwersji pomiêdzy formatami plików muzycznych jak i do
-wielo¶cie¿kowego nak³adania efektów, miksowania (przenikania, wyciszania),
-nagrywania i odzyskiwania (w domy¶le odszumiania lub wyrzucania
-zniekszta³ceñ) sygna³u.
+wielo¶cie¿kowego nak³adania efektów, miksowania (przenikania,
+wyciszania), nagrywania i odzyskiwania (w domy¶le odszumiania lub
+wyrzucania zniekszta³ceñ) sygna³u.
 
 Ecasound wspiera szerok± gamê ¼róde³ i wyj¶æ d¼wiêku oraz algorytmów
 do jego przetwarzania. Ecasound wspiera wiele wolnych (open source)
@@ -53,6 +54,7 @@ interfejs u¿ytkownika - qtecasound.
 Summary:	Ecasound libraries
 Summary(pl):	Biblioteki programu ecasound
 Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 
@@ -66,6 +68,7 @@ Biblioteki programu ecasound.
 Summary:	Ecasound headers
 Summary(pl):	Pliki nag³ówkowe bibliotek programu ecasound
 Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	libecasound = %{version}
@@ -80,6 +83,7 @@ Pliki nag³ówkowe bibliotek programu ecasound.
 Summary:	Ecasound static libraries
 Summary(pl):	Biblioteki statyczne programu ecasound
 Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	libecasound-devel = %{version}
@@ -94,9 +98,7 @@ Biblioteki statyczne programu ecasound.
 %setup -q
 
 %build
-LDFLAGS="-s"
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti"
-export LDFLAGS CXXFLAGS
 %configure \
 	--enable-sys-readline
 %{__make}
