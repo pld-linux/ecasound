@@ -133,11 +133,11 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %patch4 -p1
 
 %build
-rm missing
+rm -f missing
 %ifarch sparc sparc64
 %{__libtoolize}
 %endif
-aclocal
+%{__aclocal}
 %{__autoconf}
 %{__automake}
 CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
