@@ -1,13 +1,15 @@
-
+%include	/usr/lib/rpm/macros.python
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.0.3
-Release:	2
+Version:	2.1.0
+Release:	1
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
+Group(es):	Aplicaciones/Sonido
 Group(pl):	Aplikacje/D¼wiêk
+Group(pt_BR):	Aplicações/Som
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 Patch0:		%{name}-am_fix.patch
 Patch1:		%{name}-ac_fix.patch
@@ -23,13 +25,11 @@ BuildRequires:	libtool
 BuildRequires:	libstdc++-devel
 BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
-BuildRequires:	python-devel >= 2.1
+BuildRequires:	python-devel >= 2.2
 Requires:	lame
 Requires:	mpg123
 Requires:	libecasound = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%include /usr/lib/rpm/macros.python
 
 %description
 Ecasound is a software package designed for multitrack audio
@@ -68,7 +68,7 @@ interfejs u¿ytkownika - qtecasound.
 Summary:	Ecasound libraries
 Summary(pl):	Biblioteki programu ecasound
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
@@ -86,7 +86,7 @@ Biblioteki programu ecasound.
 Summary:	Ecasound headers
 Summary(pl):	Pliki nag³ówkowe bibliotek programu ecasound
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
@@ -105,7 +105,7 @@ Pliki nag³ówkowe bibliotek programu ecasound.
 Summary:	Ecasound static libraries
 Summary(pl):	Biblioteki statyczne programu ecasound
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
+Group(de):	Entwicklung/Bibliotheken
 Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
@@ -125,7 +125,9 @@ Summary:	Ecasound plugins (ALSA, Audio File Library, aRts)
 Summary(pl):	Wtyczki dla programu ecasound (ALSA, Audio File Library, aRts)
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
+Group(es):	Aplicaciones/Sonido
 Group(pl):	Aplikacje/D¼wiêk
+Group(pt_BR):	Aplicações/Som
 Requires:	ecasound = %{version}
 
 %description plugins
@@ -142,6 +144,8 @@ Summary:	Python module for Ecasound
 Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
 Group:		Development/Languages/Python
 Group(de):	Entwicklung/Sprachen/Python
+Group(es):	Desarrollo/Lenguages/Python
+Group(fr):	Development/Langues/Python
 Group(pl):	Programowanie/Jêzyki/Python
 %requires_eq	python
 
@@ -166,7 +170,7 @@ libtoolize --copy --force
 aclocal
 autoconf
 automake -a -c
-CXXFLAGS="%{rpmcflags} -D_REENTRANT"
+CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
 %configure \
 	--enable-sys-readline \
 	--with-python-includes=%{py_incdir} \
@@ -213,8 +217,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ecasound-config
 %attr(755,root,root) %{_bindir}/ecasoundc-config
-%{_includedir}/ecasound/*
-%{_includedir}/kvutils/*
+%{_includedir}/ecasound
+%{_includedir}/kvutils
 %attr(755,root,root) %{_libdir}/libkvutils.so
 %attr(755,root,root) %{_libdir}/libkvutils.la
 %attr(755,root,root) %{_libdir}/libecasound*.so
