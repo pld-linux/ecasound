@@ -6,10 +6,6 @@ Version:	2.1.0
 Release:	1
 License:	GPL
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D╪wiЙk
-Group(pt_BR):	AplicaГУes/Som
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 Patch0:		%{name}-am_fix.patch
 Patch1:		%{name}-ac_fix.patch
@@ -69,13 +65,6 @@ interfejs u©ytkownika - qtecasound.
 Summary:	Ecasound libraries
 Summary(pl):	Biblioteki programu ecasound
 Group:		Development/Libraries
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 
 %description -n libecasound
 Ecasound libraries.
@@ -87,13 +76,6 @@ Biblioteki programu ecasound.
 Summary:	Ecasound headers
 Summary(pl):	Pliki nagЁСwkowe bibliotek programu ecasound
 Group:		Development/Libraries
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	libecasound = %{version}
 
 %description -n libecasound-devel
@@ -106,13 +88,6 @@ Pliki nagЁСwkowe bibliotek programu ecasound.
 Summary:	Ecasound static libraries
 Summary(pl):	Biblioteki statyczne programu ecasound
 Group:		Development/Libraries
-Group(de):	Entwicklung/Bibliotheken
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	libecasound-devel = %{version}
 
 %description -n libecasound-static
@@ -125,10 +100,6 @@ Biblioteki statyczne programu ecasound.
 Summary:	Ecasound plugins (ALSA, Audio File Library, aRts)
 Summary(pl):	Wtyczki dla programu ecasound (ALSA, Audio File Library, aRts)
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(es):	Aplicaciones/Sonido
-Group(pl):	Aplikacje/D╪wiЙk
-Group(pt_BR):	AplicaГУes/Som
 Requires:	ecasound = %{version}
 
 %description plugins
@@ -144,10 +115,6 @@ Library oraz aRts.
 Summary:	Python module for Ecasound
 Summary(pl):	ModuЁ jЙzyka Python dla biblioteki programu ecasound
 Group:		Development/Languages/Python
-Group(de):	Entwicklung/Sprachen/Python
-Group(es):	Desarrollo/Lenguages/Python
-Group(fr):	Development/Langues/Python
-Group(pl):	Programowanie/JЙzyki/Python
 %requires_eq	python
 
 %description -n python-%{name}
