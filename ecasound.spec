@@ -6,14 +6,13 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	1.8.5d15
+Version:	1.9dev1
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-Patch0:		%{name}-lib.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
@@ -134,7 +133,6 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti"
