@@ -2,13 +2,14 @@
 # Conditional build:
 %bcond_without	alsa		# without ALSA support (implies without JACK)
 %bcond_without	jack		# without JACK support
+%bcond_without	ruby		# without ruby support
 %bcond_with	arts		# with aRts support
 #
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.3.5
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
@@ -28,11 +29,13 @@ BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
-BuildRequires:	ruby
+%{?with_ruby:BuildRequires:	ruby}
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%if %{with ruby}
 %define		ruby_sitelibdir	%(ruby -r rbconfig -e 'print Config::CONFIG["sitelibdir"]')
+%endif
 
 %description
 Ecasound is a software package designed for multitrack audio
@@ -201,6 +204,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{py_sitedir}/*.so
 %{py_sitedir}/*.py[co]
 
+%if %{with ruby}
 %files -n ruby-%{name}
 %defattr(644,root,root,755)
 %{ruby_sitelibdir}/ecasound.rb
+%endif
