@@ -4,18 +4,15 @@
 %bcond_without	jack		# without JACK support
 %bcond_with	arts		# with aRts support
 #
-%if %{without alsa}
-%undefine	with_jack
-%endif
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.3.4
+Version:	2.3.5
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	4d8e319b6c231acfe4884cc24114cace
+# Source0-md5:	bbc0c4d12c1d21a7e71fc1bdb9fb0e2b
 Patch0:		%{name}-link.patch
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	arts-devel}
