@@ -29,11 +29,11 @@ diff -Nur ecasound-2.2.0.orig/ecasound/Makefile.am ecasound-2.2.0/ecasound/Makef
  	 	$(top_builddir)/libecasound/libecasound_debug.la \
  		$(top_builddir)/kvutils/libkvutils_debug.la
  
-diff -Nur ecasound-2.2.0.orig/kvutils/Makefile.am ecasound-2.2.0/kvutils/Makefile.am
---- ecasound-2.2.0.orig/kvutils/Makefile.am	Tue Nov  5 02:05:17 2002
-+++ ecasound-2.2.0/kvutils/Makefile.am	Sat Feb 15 11:07:24 2003
+diff -Nur ecasound-2.2.3.orig/kvutils/Makefile.am ecasound-2.2.3/kvutils/Makefile.am
+--- ecasound-2.2.3.orig/kvutils/Makefile.am	Tue Nov  5 02:05:17 2002
++++ ecasound-2.2.3/kvutils/Makefile.am	Sat Feb 15 11:07:24 2003
 @@ -41,13 +41,13 @@
- 			kvu_value_queue.h
+ 			kvu_inttypes.h
  
  libkvutils_la_SOURCES = $(kvutil_sources) $(kvutil_headers)
 -libkvutils_la_LDFLAGS = -version-info @LIBKVUTILS_VERSION@:0:0 -static
@@ -43,11 +43,11 @@ diff -Nur ecasound-2.2.0.orig/kvutils/Makefile.am ecasound-2.2.0/kvutils/Makefil
  libkvutils_debug_la_LDFLAGS = $(libkvutils_la_LDFLAGS)
  
  libkvutils_tester_SOURCES = libkvutils_tester.cpp
--libkvutils_tester_LDFLAGS = $(lib_LTLIBRARIES) -static
-+libkvutils_tester_LDFLAGS = $(lib_LTLIBRARIES)
+-libkvutils_tester_LDFLAGS = -static
++libkvutils_tester_LDFLAGS =
+ libkvutils_tester_LDADD = $(lib_LTLIBRARIES)
  
  noinst_HEADERS = $(kvutil_headers)
- 
 diff -Nur ecasound-2.2.0.orig/libecasound/Makefile.am ecasound-2.2.0/libecasound/Makefile.am
 --- ecasound-2.2.0.orig/libecasound/Makefile.am	Tue Jan  7 23:35:13 2003
 +++ ecasound-2.2.0/libecasound/Makefile.am	Sat Feb 15 11:12:58 2003
@@ -62,13 +62,13 @@ diff -Nur ecasound-2.2.0.orig/libecasound/Makefile.am ecasound-2.2.0/libecasound
  libecasound_debug_la_CFLAGS = $(libecasound_la_CFLAGS)
  libecasound_debug_la_LDFLAGS = $(libecasound_la_LDFLAGS)
  libecasound_debug_la_LIBADD = $(libecasound_la_LIBADD)
-diff -Nur ecasound-2.2.0.orig/libecasound/plugins/Makefile.am ecasound-2.2.0/libecasound/plugins/Makefile.am
---- ecasound-2.2.0.orig/libecasound/plugins/Makefile.am	Thu Oct 17 03:09:07 2002
-+++ ecasound-2.2.0/libecasound/plugins/Makefile.am	Sat Feb 15 11:07:34 2003
+diff -Nur ecasound-2.2.3.orig/libecasound/plugins/Makefile.am ecasound-2.2.3/libecasound/plugins/Makefile.am
+--- ecasound-2.2.3.orig/libecasound/plugins/Makefile.am	Thu Oct 17 03:09:07 2002
++++ ecasound-2.2.3/libecasound/plugins/Makefile.am	Sat Feb 15 11:07:34 2003
 @@ -86,7 +86,7 @@
  libecasound_plugins_la_SOURCES          = audioio_dummy.cpp $(plugin_cond_sources)
  EXTRA_libecasound_plugins_la_SOURCES    = $(plugin_cond_sources)
- libecasound_plugins_la_LIBADD		= $(af_libs) $(alsa_libs) $(arts_libs) $(jack_libs)
+ libecasound_plugins_la_LIBADD		= $(af_libs) $(alsa_libs) $(arts_libs) $(ECA_S_JACK_LIBS)
 -libecasound_plugins_la_LDFLAGS 		= -static
 +libecasound_plugins_la_LDFLAGS 		=
  
@@ -89,3 +89,14 @@ diff -Nur ecasound-2.2.0.orig/libecasoundc/Makefile.am ecasound-2.2.0/libecasoun
  endif
  
  INCLUDES = -I$(srcdir)
+--- ecasound-2.2.3/pyecasound/Makefile.am.orig	2003-04-02 21:37:45.000000000 +0200
++++ ecasound-2.2.3/pyecasound/Makefile.am	2003-05-10 20:48:34.000000000 +0200
+@@ -50,7 +50,7 @@
+ all: pyecasound.so
+ 
+ pyecasound.so: pyecasound.lo
+-	$(CC) -o pyecasound.so -shared -nostartfiles $(libpyecasound_la_LDFLAGS) pyecasound.lo $(top_builddir)/libecasoundc/ecasoundc_sa.lo
++	$(LINK) -o pyecasound.so -shared -nostartfiles $(libpyecasound_la_LDFLAGS) pyecasound.lo $(top_builddir)/libecasoundc/ecasoundc_sa.lo
+ endif
+ 
+ # ----------------------------------------------------------------------

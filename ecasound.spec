@@ -1,8 +1,6 @@
-
 #
 # todo:
 # - jack-audio-connection-kit support
-# - ladspa support? (configure checks for LADSPA)
 #
 
 #
@@ -15,7 +13,7 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.2.0
+Version:	2.2.3
 Release:	3
 License:	GPL
 Group:		Applications/Sound
@@ -26,6 +24,7 @@ Patch0:		%{name}-link.patch
 %endif
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	ladspa-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	python-devel >= 2.2
@@ -132,6 +131,7 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 	--disable-arts \
 	%{?_without_alsa:--disable-alsa} \
 	%{!?_without_alsa:--disable-oss} \
+	--enable-pyecasound \
 	--with-largefile
 
 %{__make}
