@@ -1,6 +1,7 @@
 #
 # Conditional build:
 # _without_alsa	- without ALSA support
+# _without_arts - without arts support
 #
 
 %include	/usr/lib/rpm/macros.python
