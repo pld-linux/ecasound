@@ -1,6 +1,6 @@
 
 %define python_sitepkgsdir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/site-packages/')"`)
-%define python_lib-dynloadir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/lib-dynloa/')"`)
+%define python_libdynloadir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/lib-dynloa/')"`)
 %define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
 %define python_compile python -c "import compileall; compileall.compile_dir('.')"
 
@@ -205,7 +205,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libkvutils.a
 %{_libdir}/libecasound.a
-%{python_lib-dynloadir}/*.a
+%{python_libdynloadir}/*.a
 
 %files plugins
 %defattr(644,root,root,755)
@@ -216,7 +216,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{python_lib-dynloadir}/*.so
-%{python_lib-dynloadir}/pyeca.py
+%attr(755,root,root) %{python_libdynloadir}/*.so
+%{python_libdynloadir}/pyeca.py
 %{python_sitepkgsdir}/*.pyc
 %{python_sitepkgsdir}/*.pyo
