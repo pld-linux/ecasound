@@ -1,18 +1,20 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	1.8.2r14
+Version:	1.8.3d15
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-BuildRequires:	audiofile-devel >= 0.1.7
-BuildRequires:	readline-devel
-BuildRequires:	ncurses-devel >= 5.0
+Patch0:	ecasound-plugin_no_ver.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	readline-devel
+BuildRequires:	alsa-lib-devel
+BuildRequires:	audiofile-devel >= 0.1.7
 Requires:	lame
 Requires:	mpg123
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -94,11 +96,30 @@ Ecasound static libraries.
 %description -l pl -n libecasound-static
 Biblioteki statyczne programu ecasound.
 
+%package plugins
+Summary:	Ecasound plugins (ALSA, Audio File Library, aRts)
+Summary(pl):	Wtyczki dla programu ecasound (ALSA, Audio File Library, aRts)
+Group:		Applications/Sound
+Group(de):	Applikationen/Laut
+Group(pl):	Aplikacje/D¼wiêk
+Requires:	ecasound = %{version}
+
+%description plugins
+This package contains ecasound plugins, which give support for ALSA,
+Audio File Library and aRts.
+
+%description -l pl plugins
+Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
+wspó³pracê z bibliotekami takich projektów jak ALSA, Audio File
+Library oraz aRts.
+
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti"
+automake
 %configure \
 	--enable-sys-readline
 %{__make}
@@ -119,6 +140,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ecaconvert
 %attr(755,root,root) %{_bindir}/ecafixdc
 %attr(755,root,root) %{_bindir}/ecanormalize
 %attr(755,root,root) %{_bindir}/ecaplay
@@ -136,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libecasound-devel
 %defattr(644,root,root,755)
-%{_includedir}/ecasound/[^qe]*
+%{_includedir}/ecasound/*
 %{_includedir}/kvutils/*
 %attr(755,root,root) %{_libdir}/libkvutils.so
 %attr(755,root,root) %{_libdir}/libkvutils.la
@@ -146,4 +168,11 @@ rm -rf $RPM_BUILD_ROOT
 %files -n libecasound-static
 %defattr(644,root,root,755)
 %{_libdir}/libkvutils.a
-%{_libdir}/libecasound*.a
+%{_libdir}/libecasound.a
+
+%files plugins
+%defattr(644,root,root,755)
+%dir %{_libdir}/ecasound-plugins
+%attr(755,root,root) %{_libdir}/ecasound-plugins/lib*.so*
+%{_libdir}/ecasound-plugins/lib*.la
+%{_libdir}/ecasound-plugins/lib*.a
