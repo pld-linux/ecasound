@@ -1,6 +1,6 @@
 
 %define python_sitepkgsdir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/site-packages/')"`)
-%define python_libdynloadir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/lib-dynloa/')"`)
+%define python_libdynloadir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/lib-dynload/')"`)
 %define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
 %define python_compile python -c "import compileall; compileall.compile_dir('.')"
 
