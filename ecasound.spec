@@ -1,11 +1,16 @@
+
+#
+# todo:
+# - jackit.sf.net
+#
+
 #
 # Conditional build:
 # _without_alsa	- without ALSA support
-# _without_arts - without arts support
 #
 
 %include	/usr/lib/rpm/macros.python
-%define pre pre3
+%define pre pre4
 
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
@@ -19,8 +24,6 @@ Patch0:		%{name}-link.patch
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
 %endif
-%{!?_without_arts:BuildRequires:	arts-devel}
-BuildRequires:	audiofile-devel >= 0.2.0
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
@@ -31,7 +34,6 @@ BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
 Requires:	lame
 Requires:	mpg123
-Requires:	libecasound = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -67,92 +69,17 @@ tekstowy interfejs u¿ytkownika oraz kilka innych narzêdzi nadaj±cych
 siê do przetwarzania wsadowego. Dostêpny jest tak¿e graficzny
 interfejs u¿ytkownika - qtecasound.
 
-%package -n libecasound
-Summary:	Ecasound libraries
-Summary(pl):	Biblioteki programu ecasound
-Group:		Libraries
-
-%description -n libecasound
-Ecasound libraries.
-
-%description -n libecasound -l pl
-Biblioteki programu ecasound.
-
-%package -n libecasound-devel
-Summary:	Ecasound headers
-Summary(pl):	Pliki nag³ówkowe bibliotek programu ecasound
-Group:		Development/Libraries
-Requires:	libecasound = %{version}
-
-%description -n libecasound-devel
-Ecasound headers.
-
-%description -n libecasound-devel -l pl
-Pliki nag³ówkowe bibliotek programu ecasound.
-
-%package -n libecasound-static
-Summary:	Ecasound static libraries
-Summary(pl):	Biblioteki statyczne programu ecasound
-Group:		Development/Libraries
-Requires:	libecasound-devel = %{version}
-
-%description -n libecasound-static
-Ecasound static libraries.
-
-%description -n libecasound-static -l pl
-Biblioteki statyczne programu ecasound.
-
-%package plugin-alsa
-Summary:	Ecasound ALSA plugin
-Summary(pl):	Wtyczka programu ecasound dla systemu ALSA
-Group:		Applications/Sound
-Requires:	libecasound = %{version}
-
-%description plugin-alsa
-This package contains ecasound plugin, which give support for ALSA.
-
-%description plugin-alsa -l pl
-Pakiet ten zawiera wtyczkê dla programu ecasound, która umo¿liwia
-wspó³pracê z systemem ALSA.
-
-%package plugin-arts
-Summary:	Ecasound aRts plugin
-Summary(pl):	Wtyczka programu ecasound dla serwera aRts
-Group:		Applications/Sound
-Requires:	libecasound = %{version}
-
-%description plugin-arts
-This package contains ecasound plugin, which give support for aRts.
-
-%description plugin-arts -l pl
-Pakiet ten zawiera wtyczkê dla programu ecasound, która umo¿liwia
-wspó³pracê z serwerem aRts.
-
-%package plugin-audiofile
-Summary:	Ecasound Audio File Library plugin
-Summary(pl):	Wtyczka programu ecasound dla biblioteki Audio File
-Group:		Applications/Sound
-Requires:	libecasound = %{version}
-
-%description plugin-audiofile
-This package contains ecasound plugin, which give support for
-Audio File Library.
-
-%description plugin-audiofile -l pl
-Pakiet ten zawiera wtyczkê dla programu ecasound, która umo¿liwia
-wspó³pracê z bibliotek± Audio File.
-
 %package -n python-%{name}
 Summary:	Python module for Ecasound
-Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
+Summary(pl):	Modu³ jêzyka Python dla programu ecasound
 Group:		Libraries/Python
 %pyrequires_eq	python-modules
 
 %description -n python-%{name}
-Python module for Ecasound library.
+Python module for Ecasound.
 
 %description -n python-%{name} -l pl
-Modu³ jêzyka Python dla biblioteki programu ecasound.
+Modu³ jêzyka Python dla programu ecasound.
 
 %prep
 %setup -q -n %{name}-%{version}-%{pre}
@@ -165,11 +92,19 @@ aclocal
 %{__autoconf}
 %{__automake}
 CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
+# disable audiofile - ecasound has native support for wav and raw formats
+# disable oss       - ecasound works nicely with alsa oss emulation;
+#                     in case of alsa building conditional, the oss should
+#                     be enabled
+# disable arts      - 'not really useful' as said by ecasound author
 %configure \
 	--enable-sys-readline \
 	--with-python-includes=%{py_incdir} \
 	--with-python-modules=%{py_libdir} \
-	%{?_without_alsa:--disable-alsa}
+	--disable-audiofile \
+	--disable-arts \
+	%{?_without_alsa:--disable-alsa} \
+	%{!?_without_alsa:--disable-oss}
 
 %{__make}
 
@@ -186,58 +121,14 @@ install pyecasound/*.py $RPM_BUILD_ROOT%{py_sitedir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -n libecasound -p /sbin/ldconfig
-%postun -n libecasound -p /sbin/ldconfig
-
 %files
 %defattr(644,root,root,755)
 %doc BUGS NEWS README TODO
 %attr(755,root,root) %{_bindir}/eca*
+%{_datadir}/ecasound
+
 %{_mandir}/man1/eca*
 %{_mandir}/man5/eca*
-
-%files -n libecasound
-%defattr(644,root,root,755)
-%dir %{_datadir}/ecasound
-%dir %{_libdir}/libecasound*-plugins
-
-%{_datadir}/ecasound/*
-%attr(755,root,root) %{_libdir}/libkvutils*.so.*.*
-%attr(755,root,root) %{_libdir}/libecasound*.so.*.*
-
-%files -n libecasound-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/lib*-config
-%{_includedir}/libecasound*
-%{_includedir}/kvutils*
-%attr(755,root,root) %{_libdir}/libkvutils*.so
-%attr(755,root,root) %{_libdir}/libkvutils*.la
-%attr(755,root,root) %{_libdir}/libecasound*.so
-%attr(755,root,root) %{_libdir}/libecasound*.la
-
-%files -n libecasound-static
-%defattr(644,root,root,755)
-%{_libdir}/libkvutils*.a
-%{_libdir}/libecasound*.a
-
-%if %{?_without_alsa:0}%{!?_without_alsa:1}
-%files plugin-alsa
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.so
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.la
-%endif
-
-%if %{?_without_arts:0}%{!?_without_arts:1}
-%files plugin-arts
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.so
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.la
-%endif
-
-%files plugin-audiofile
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_af*.so
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_af*.la
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
