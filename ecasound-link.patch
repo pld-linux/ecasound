@@ -1,43 +1,28 @@
-diff -Nur ecasound-2.2.0.orig/configure.in ecasound-2.2.0/configure.in
---- ecasound-2.2.0.orig/configure.in	Thu Jan  9 21:24:30 2003
-+++ ecasound-2.2.0/configure.in	Sat Feb 15 11:10:34 2003
-@@ -629,8 +629,8 @@
-      [AC_CHECK_HEADER(readline/history.h,,
-        AC_MSG_ERROR([*** readline history headers not installed ***]))])
- 
--  AC_CHECK_LIB(readline, main,, AC_MSG_ERROR([*** readline support not installed ***]))
--  AC_CHECK_LIB(history, main,, AC_MSG_ERROR([*** readline history support not installed ***]))
-+  AC_CHECK_LIB(readline, main, true, AC_MSG_ERROR([*** readline support not installed ***]))
-+  AC_CHECK_LIB(history, main, true, AC_MSG_ERROR([*** readline history support not installed ***]))
-   AC_SUBST(ECA_S_READLINE_INCLUDES)
- else
-   AC_CONFIG_SUBDIRS(readline-4.0)
-diff -Nur ecasound-2.2.0.orig/ecasound/Makefile.am ecasound-2.2.0/ecasound/Makefile.am
---- ecasound-2.2.0.orig/ecasound/Makefile.am	Wed Oct 30 19:39:32 2002
-+++ ecasound-2.2.0/ecasound/Makefile.am	Sat Feb 15 11:11:34 2003
-@@ -43,11 +43,11 @@
- 
+--- ecasound-2.3.0/ecasound/Makefile.am.orig	2003-05-30 02:15:49.000000000 +0200
++++ ecasound-2.3.0/ecasound/Makefile.am	2003-09-07 14:39:50.724992384 +0200
+@@ -44,12 +44,12 @@
  if ECA_AM_SYSTEM_READLINE
  ecasound_LDFLAGS = -export-dynamic
--ecasound_LDADD = $(termcap_library) \
-+ecasound_LDADD = $(termcap_library) -lreadline -lhistory \
+ ecasound_LDADD = $(termcap_library) \
+-		$(readline_library} -lreadline -lhistory \
++		$(readline_library) -lreadline -lhistory \
  		$(top_builddir)/libecasound/libecasound.la \
  		$(top_builddir)/kvutils/libkvutils.la
  ecasound_debug_LDFLAGS = $(ecasound_LDFLAGS)
--ecasound_debug_LDADD = $(termcap_library) \
-+ecasound_debug_LDADD = $(termcap_library) -lreadline -lhistory \
+ ecasound_debug_LDADD = $(termcap_library) \
+-		$(readline_library} -lreadline -lhistory \
++		$(readline_library) -lreadline -lhistory \
  	 	$(top_builddir)/libecasound/libecasound_debug.la \
  		$(top_builddir)/kvutils/libkvutils_debug.la
  
-diff -Nur ecasound-2.2.3.orig/kvutils/Makefile.am ecasound-2.2.3/kvutils/Makefile.am
---- ecasound-2.2.3.orig/kvutils/Makefile.am	Tue Nov  5 02:05:17 2002
-+++ ecasound-2.2.3/kvutils/Makefile.am	Sat Feb 15 11:07:24 2003
+--- ecasound-2.3.0.orig/kvutils/Makefile.am	Tue Nov  5 02:05:17 2002
++++ ecasound-2.3.0/kvutils/Makefile.am	Sat Feb 15 11:07:24 2003
 @@ -41,13 +41,13 @@
  			kvu_inttypes.h
  
  libkvutils_la_SOURCES = $(kvutil_sources) $(kvutil_headers)
--libkvutils_la_LDFLAGS = -version-info @LIBKVUTILS_VERSION@:0:0 -static
-+libkvutils_la_LDFLAGS = -version-info @LIBKVUTILS_VERSION@:0:0
+-libkvutils_la_LDFLAGS = -version-info @LIBKVUTILS_VERSION@:0:@LIBKVUTILS_VERSION_AGE@ -static
++libkvutils_la_LDFLAGS = -version-info @LIBKVUTILS_VERSION@:0:@LIBKVUTILS_VERSION_AGE@
  
  libkvutils_debug_la_SOURCES = $(libkvutils_la_SOURCES)
  libkvutils_debug_la_LDFLAGS = $(libkvutils_la_LDFLAGS)
@@ -74,18 +59,17 @@ diff -Nur ecasound-2.2.3.orig/libecasound/plugins/Makefile.am ecasound-2.2.3/lib
  
  libecasound_plugins_debug_la_SOURCES	= $(libecasound_plugins_la_SOURCES)
  EXTRA_libecasound_plugins_debug_la_SOURCES = $(EXTRA_libecasound_plugins_la_SOURCES)
-diff -Nur ecasound-2.2.0.orig/libecasoundc/Makefile.am ecasound-2.2.0/libecasoundc/Makefile.am
---- ecasound-2.2.0.orig/libecasoundc/Makefile.am	Mon Dec 16 05:20:39 2002
-+++ ecasound-2.2.0/libecasoundc/Makefile.am	Sat Feb 15 11:07:07 2003
+--- ecasound-2.3.0.orig/libecasoundc/Makefile.am	Mon Dec 16 05:20:39 2002
++++ ecasound-2.3.0/libecasoundc/Makefile.am	Sat Feb 15 11:07:07 2003
 @@ -8,9 +8,9 @@
  # !!!
  # remember to update eca-version.cpp
  if ECA_AM_DEBUG_MODE
--eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:0 -static
-+eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:0
+-eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:@LIBECASOUNDC_VERSION_AGE@ -static
++eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:@LIBECASOUNDC_VERSION_AGE@
  else
--eca_ldflags = -s -version-info @LIBECASOUNDC_VERSION@:0:0 -static
-+eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:0
+-eca_ldflags = -s -version-info @LIBECASOUNDC_VERSION@:0:@LIBECASOUNDC_VERSION_AGE@ -static
++eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:@LIBECASOUNDC_VERSION_AGE@
  endif
  
  INCLUDES = -I$(srcdir)

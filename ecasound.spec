@@ -1,25 +1,28 @@
-# todo:
-# - jack-audio-connection-kit support
 #
 # Conditional build:
-# _without_alsa	- without ALSA support
+%{?_without_alsa:%global _without_jack 1}
+%bcond_without	alsa		# without ALSA support (implies without JACK)
+%bcond_without	jack		# without JACK support
+%bcond_with	arts		# with aRts support
 #
 %include	/usr/lib/rpm/macros.python
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.2.3
+Version:	2.3.0
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	40a3f0213c30b18e1b4e7879faa6b454
+# Source0-md5:	fb440a68466c8bd6f7bc8a14adf46ef7
 Patch0:		%{name}-link.patch
 %ifnarch sparc sparc64
-%{!?_without_alsa:BuildRequires:	alsa-lib-devel}
+%{?with_alsa:BuildRequires:	alsa-lib-devel}
 %endif
+%{?with_arts:BuildRequires:	arts-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
+%{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
 BuildRequires:	ladspa-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libstdc++-devel
@@ -69,6 +72,8 @@ Summary:	Header files for ecasound libraries
 Summary(pl):	Pliki nag³ówkowe bibliotek ecasound
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
+Requires:	libsamplerate-devel
+Requires:	libstdc++-devel
 Obsoletes:	libecasound-devel
 
 %description devel
@@ -107,7 +112,6 @@ Modu³ jêzyka Python dla programu ecasound.
 %patch0 -p1
 
 %build
-rm -f missing
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -119,10 +123,11 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 #                     be enabled
 # disable arts      - 'not really useful' as said by ecasound author
 %configure \
-	%{?_without_alsa:--disable-alsa} \
-	--disable-arts \
+	%{!?with_alsa:--disable-alsa} \
+	%{!?with_arts:--disable-arts} \
 	--disable-audiofile \
-	%{!?_without_alsa:--disable-oss} \
+	%{!?with_jack:--disable-jack} \
+	%{?with_alsa:--disable-oss} \
 	--enable-samplerate \
 	--enable-sys-readline \
 	--enable-pyecasound \
