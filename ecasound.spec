@@ -132,7 +132,7 @@ Summary(pl):	Pliki nag³ówkowe bibliotek interfejsu graficznego programu ecasound
 Group:		Development/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
-Requires:	ibqtecasound = %{version}
+Requires:	libqtecasound = %{version}
 
 %description -n libqtecasound-devel
 Ecasound QT frontend library headers.
