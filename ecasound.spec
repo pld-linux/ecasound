@@ -10,16 +10,15 @@
 #
 
 %include	/usr/lib/rpm/macros.python
-%define pre pre4
 
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.2.0
-Release:	0.%{pre}.1
+Release:	1
 License:	GPL
 Group:		Applications/Sound
-Source0:	http://ecasound.seul.org/download/%{name}-%{version}-%{pre}.tar.gz
+Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 Patch0:		%{name}-link.patch
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
@@ -82,7 +81,7 @@ Python module for Ecasound.
 Modu³ jêzyka Python dla programu ecasound.
 
 %prep
-%setup -q -n %{name}-%{version}-%{pre}
+%setup -q
 %patch0 -p1
 
 %build
@@ -91,7 +90,7 @@ rm -f missing
 aclocal
 %{__autoconf}
 %{__automake}
-CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
+CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 # disable audiofile - ecasound has native support for wav and raw formats
 # disable oss       - ecasound works nicely with alsa oss emulation;
 #                     in case of alsa building conditional, the oss should
