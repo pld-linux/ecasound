@@ -165,12 +165,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ecaconvert
-%attr(755,root,root) %{_bindir}/ecafixdc
-%attr(755,root,root) %{_bindir}/ecanormalize
-%attr(755,root,root) %{_bindir}/ecaplay
-%attr(755,root,root) %{_bindir}/ecasignalview
-%attr(755,root,root) %{_bindir}/ecasound
+%attr(755,root,root) %{_bindir}/eca*
 %{_mandir}/man1/eca*
 %{_mandir}/man5/eca*
 
@@ -183,27 +178,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libecasound-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ecasound-config
-%attr(755,root,root) %{_bindir}/ecasoundc-config
-%{_includedir}/ecasound
-%{_includedir}/kvutils
-%attr(755,root,root) %{_libdir}/libkvutils.so
-%attr(755,root,root) %{_libdir}/libkvutils.la
+%attr(755,root,root) %{_bindir}/lib*-config
+%{_includedir}/libecasound*
+%{_includedir}/kvutils*
+%attr(755,root,root) %{_libdir}/libkvutils*.so
+%attr(755,root,root) %{_libdir}/libkvutils*.la
 %attr(755,root,root) %{_libdir}/libecasound*.so
 %attr(755,root,root) %{_libdir}/libecasound*.la
 
 %files -n libecasound-static
 %defattr(644,root,root,755)
-%{_libdir}/libkvutils.a
-%{_libdir}/libecasound.a
-%{py_sitedir}/*.a
+%{_libdir}/libkvutils*.a
+%{_libdir}/libecasound*.a
 
 %files plugins
 %defattr(644,root,root,755)
-%dir %{_libdir}/ecasound-plugins
-%attr(755,root,root) %{_libdir}/ecasound-plugins/lib*.so*
-%{_libdir}/ecasound-plugins/lib*.la
-%{_libdir}/ecasound-plugins/lib*.a
+%dir %{_libdir}/libecasound*-plugins
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/lib*.so
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/lib*.la
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
