@@ -13,7 +13,7 @@ Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-Patch0:	%{name}-lib.patch
+Patch0:		%{name}-lib.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
@@ -122,7 +122,9 @@ Library oraz aRts.
 %package -n python-%{name}
 Summary:	Python module for Ecasound
 Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
-Group:	Development/Languages/Python
+Group:		Development/Languages/Python
+Group(de):	Entwicklung/Sprachen/Python
+Group(pl):	Programowanie/Jêzyki/Python
 
 %description -n python-%{name}
 Python module for Ecasound library.
