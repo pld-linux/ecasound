@@ -1,3 +1,7 @@
+#
+# Conditional build:
+# _without_alsa	- without ALSA support
+#
 %include	/usr/lib/rpm/macros.python
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
@@ -8,18 +12,20 @@ License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 Patch0:		%{name}-readline.patch
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	audiofile-devel >= 0.2.0
+Patch1:		%{name}-installfix.patch
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
 %endif
-BuildRequires:	libtool
+%{!?_without_arts:BuildRequires:	arts-devel}
+BuildRequires:	audiofile-devel >= 0.2.0
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	readline-devel >= 4.2
-BuildRequires:	rpm-pythonprov
+BuildRequires:	libtool
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
+BuildRequires:	readline-devel >= 4.2
+BuildRequires:	rpm-pythonprov
 Requires:	lame
 Requires:	mpg123
 Requires:	libecasound = %{version}
@@ -148,11 +154,12 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
-rm missing
+rm -f missing
 %ifarch sparc sparc64
-libtoolize --copy --force
+%{__libtoolize}
 %endif
 aclocal
 %{__autoconf}
@@ -176,11 +183,11 @@ install pyecasound/*.py $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 
-%post   -n libecasound -p /sbin/ldconfig
-%postun -n libecasound -p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -n libecasound -p /sbin/ldconfig
+%postun -n libecasound -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -213,15 +220,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkvutils*.a
 %{_libdir}/libecasound*.a
 
+%if %{?_without_alsa:0}%{!?_without_alsa:1}
 %files plugins-alsa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.so
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.la
+%endif
 
+%if %{?_without_arts:0}%{!?_without_arts:1}
 %files plugins-arts
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.so
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.la
+%endif
 
 %files plugins-audiofile
 %defattr(644,root,root,755)
