@@ -3,14 +3,11 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.1dev9
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-Patch0:		%{name}-am_fix.patch
-Patch1:		%{name}-ac_fix.patch
-Patch2:		%{name}-readline.patch
-Patch3:		%{name}-am15.patch
+Patch0:		%{name}-readline.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	audiofile-devel >= 0.2.0
@@ -96,20 +93,45 @@ Ecasound static libraries.
 %description -n libecasound-static -l pl
 Biblioteki statyczne programu ecasound.
 
-%package plugins
-Summary:	Ecasound plugins (ALSA, Audio File Library, aRts)
-Summary(pl):	Wtyczki dla programu ecasound (ALSA, Audio File Library, aRts)
+%package plugins-alsa
+Summary:	Ecasound ALSA plugins
+Summary(pl):	Wtyczka programu ecasound dla systemu ALSA
 Group:		Applications/Sound
-Requires:	ecasound = %{version}
+Requires:	libecasound = %{version}
 
-%description plugins
-This package contains ecasound plugins, which give support for ALSA,
-Audio File Library and aRts.
+%description plugins-alsa
+This package contains ecasound plugins, which give support for ALSA.
 
-%description plugins -l pl
+%description plugins-alsa -l pl
 Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
-wspó³pracê z bibliotekami takich projektów jak ALSA, Audio File
-Library oraz aRts.
+wspó³pracê z systemem ALSA.
+
+%package plugins-arts
+Summary:	Ecasound aRts plugins
+Summary(pl):	Wtyczka programu ecasound dla serwera aRts
+Group:		Applications/Sound
+Requires:	libecasound = %{version}
+
+%description plugins-arts
+This package contains ecasound plugins, which give support for aRts.
+
+%description plugins-arts -l pl
+Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
+wspó³pracê z serwerem aRts.
+
+%package plugins-audiofile
+Summary:	Ecasound Audio File Library plugins
+Summary(pl):	Wtyczka programu ecasound dla biblioteki Audio File
+Group:		Applications/Sound
+Requires:	libecasound = %{version}
+
+%description plugins-audiofile
+This package contains ecasound plugins, which give support for
+Audio File Library.
+
+%description plugins-audiofile -l pl
+Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
+wspó³pracê z bibliotek± Audio File.
 
 %package -n python-%{name}
 Summary:	Python module for Ecasound
@@ -125,10 +147,7 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
-%patch2 -p1
-#%patch3 -p1
+%patch0 -p1
 
 %build
 rm missing
@@ -165,6 +184,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc examples.html
 %attr(755,root,root) %{_bindir}/eca*
 %{_mandir}/man1/eca*
 %{_mandir}/man5/eca*
@@ -172,6 +192,8 @@ rm -rf $RPM_BUILD_ROOT
 %files -n libecasound
 %defattr(644,root,root,755)
 %dir %{_datadir}/ecasound
+%dir %{_libdir}/libecasound*-plugins
+
 %{_datadir}/ecasound/*
 %attr(755,root,root) %{_libdir}/libkvutils*.so.*.*
 %attr(755,root,root) %{_libdir}/libecasound*.so.*.*
@@ -191,11 +213,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkvutils*.a
 %{_libdir}/libecasound*.a
 
-%files plugins
+%files plugins-alsa
 %defattr(644,root,root,755)
-%dir %{_libdir}/libecasound*-plugins
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/lib*.so
-%attr(755,root,root) %{_libdir}/libecasound*-plugins/lib*.la
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.so
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.la
+
+%files plugins-arts
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.so
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.la
+
+%files plugins-audiofile
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_af*.so
+%attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_af*.la
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
