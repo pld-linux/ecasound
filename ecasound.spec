@@ -1,15 +1,10 @@
-#
 # todo:
 # - jack-audio-connection-kit support
-#
-
 #
 # Conditional build:
 # _without_alsa	- without ALSA support
 #
-
 %include	/usr/lib/rpm/macros.python
-
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
@@ -124,16 +119,16 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 #                     be enabled
 # disable arts      - 'not really useful' as said by ecasound author
 %configure \
-	--enable-sys-readline \
-	--with-python-includes=%{py_incdir} \
-	--with-python-modules=%{py_libdir} \
-	--disable-audiofile \
-	--disable-arts \
 	%{?_without_alsa:--disable-alsa} \
+	--disable-arts \
+	--disable-audiofile \
 	%{!?_without_alsa:--disable-oss} \
-	--enable-pyecasound \
 	--enable-samplerate \
-	--with-largefile
+	--enable-sys-readline \
+	--enable-pyecasound \
+	--with-largefile \
+	--with-python-includes=%{py_incdir} \
+	--with-python-modules=%{py_libdir}
 
 %{__make}
 
@@ -141,7 +136,9 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{py_sitedir}
 
-%{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	mandir=%{_mandir}
 
 install pyecasound/*.py $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
@@ -158,9 +155,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc BUGS NEWS README TODO
 %attr(755,root,root) %{_bindir}/eca*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-
 %{_datadir}/ecasound
-
 %{_mandir}/man1/eca*
 %{_mandir}/man5/eca*
 
