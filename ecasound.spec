@@ -205,6 +205,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libkvutils.a
 %{_libdir}/libecasound.a
+%{python_lib-dynloadir}/*.a
 
 %files plugins
 %defattr(644,root,root,755)
@@ -215,6 +216,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{python_sitepkgsdir}/*.so
-%{python_lib-dynloadir}/*.pyo
-%{python_lib-dynloadir}/*.pyc
+%attr(755,root,root) %{python_lib-dynloadir}/*.so
+%{python_lib-dynloadir}/pyeca.py
+%{python_sitepkgsdir}/*.pyc
+%{python_sitepkgsdir}/*.pyo
