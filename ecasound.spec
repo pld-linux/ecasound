@@ -26,6 +26,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
 BuildRequires:	python-devel >= 2.2
+BuildRequires:	python-modules >= 2.2
 Requires:	lame
 Requires:	mpg123
 Requires:	libecasound = %{version}
