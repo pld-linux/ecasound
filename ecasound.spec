@@ -5,17 +5,17 @@
 #
 
 %include	/usr/lib/rpm/macros.python
+%define pre pre3
 
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.1dev10
-Release:	2
+Version:	2.2.0
+Release:	0.%{pre}.1
 License:	GPL
 Group:		Applications/Sound
-Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-Patch0:		%{name}-installfix.patch
-Patch1:		%{name}-link.patch
+Source0:	http://ecasound.seul.org/download/%{name}-%{version}-%{pre}.tar.gz
+Patch0:		%{name}-link.patch
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
 %endif
@@ -24,7 +24,7 @@ BuildRequires:	audiofile-devel >= 0.2.0
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 1:1.4d-3
+BuildRequires:	libtool >= 1.4.2
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 4.2
@@ -102,44 +102,44 @@ Ecasound static libraries.
 %description -n libecasound-static -l pl
 Biblioteki statyczne programu ecasound.
 
-%package plugins-alsa
-Summary:	Ecasound ALSA plugins
+%package plugin-alsa
+Summary:	Ecasound ALSA plugin
 Summary(pl):	Wtyczka programu ecasound dla systemu ALSA
 Group:		Applications/Sound
 Requires:	libecasound = %{version}
 
-%description plugins-alsa
-This package contains ecasound plugins, which give support for ALSA.
+%description plugin-alsa
+This package contains ecasound plugin, which give support for ALSA.
 
-%description plugins-alsa -l pl
-Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
+%description plugin-alsa -l pl
+Pakiet ten zawiera wtyczkê dla programu ecasound, która umo¿liwia
 wspó³pracê z systemem ALSA.
 
-%package plugins-arts
-Summary:	Ecasound aRts plugins
+%package plugin-arts
+Summary:	Ecasound aRts plugin
 Summary(pl):	Wtyczka programu ecasound dla serwera aRts
 Group:		Applications/Sound
 Requires:	libecasound = %{version}
 
-%description plugins-arts
-This package contains ecasound plugins, which give support for aRts.
+%description plugin-arts
+This package contains ecasound plugin, which give support for aRts.
 
-%description plugins-arts -l pl
-Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
+%description plugin-arts -l pl
+Pakiet ten zawiera wtyczkê dla programu ecasound, która umo¿liwia
 wspó³pracê z serwerem aRts.
 
-%package plugins-audiofile
-Summary:	Ecasound Audio File Library plugins
+%package plugin-audiofile
+Summary:	Ecasound Audio File Library plugin
 Summary(pl):	Wtyczka programu ecasound dla biblioteki Audio File
 Group:		Applications/Sound
 Requires:	libecasound = %{version}
 
-%description plugins-audiofile
-This package contains ecasound plugins, which give support for
+%description plugin-audiofile
+This package contains ecasound plugin, which give support for
 Audio File Library.
 
-%description plugins-audiofile -l pl
-Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
+%description plugin-audiofile -l pl
+Pakiet ten zawiera wtyczkê dla programu ecasound, która umo¿liwia
 wspó³pracê z bibliotek± Audio File.
 
 %package -n python-%{name}
@@ -155,9 +155,8 @@ Python module for Ecasound library.
 Modu³ jêzyka Python dla biblioteki programu ecasound.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{pre}
 %patch0 -p1
-%patch1 -p1
 
 %build
 rm -f missing
@@ -222,20 +221,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libecasound*.a
 
 %if %{?_without_alsa:0}%{!?_without_alsa:1}
-%files plugins-alsa
+%files plugin-alsa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.so
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_alsa*.la
 %endif
 
 %if %{?_without_arts:0}%{!?_without_arts:1}
-%files plugins-arts
+%files plugin-arts
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.so
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_arts*.la
 %endif
 
-%files plugins-audiofile
+%files plugin-audiofile
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_af*.so
 %attr(755,root,root) %{_libdir}/libecasound*-plugins/libaudioio_af*.la
