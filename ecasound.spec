@@ -3,7 +3,7 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.1.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
@@ -64,7 +64,7 @@ interfejs u¿ytkownika - qtecasound.
 %package -n libecasound
 Summary:	Ecasound libraries
 Summary(pl):	Biblioteki programu ecasound
-Group:		Development/Libraries
+Group:		Libraries
 
 %description -n libecasound
 Ecasound libraries.
@@ -114,7 +114,7 @@ Library oraz aRts.
 %package -n python-%{name}
 Summary:	Python module for Ecasound
 Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
-Group:		Development/Languages/Python
+Group:		Libraries/Python
 %requires_eq	python
 
 %description -n python-%{name}
