@@ -155,6 +155,7 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+%{__install} -d $RPM_BUILD_ROOT%{_libdir}/python2.0/site-packages
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
 
