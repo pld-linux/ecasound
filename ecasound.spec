@@ -69,7 +69,7 @@ Group:		Development/Libraries
 %description -n libecasound
 Ecasound libraries.
 
-%description -l pl -n libecasound
+%description -n libecasound -l pl
 Biblioteki programu ecasound.
 
 %package -n libecasound-devel
@@ -81,7 +81,7 @@ Requires:	libecasound = %{version}
 %description -n libecasound-devel
 Ecasound headers.
 
-%description -l pl -n libecasound-devel
+%description -n libecasound-devel -l pl
 Pliki nag³ówkowe bibliotek programu ecasound.
 
 %package -n libecasound-static
@@ -93,7 +93,7 @@ Requires:	libecasound-devel = %{version}
 %description -n libecasound-static
 Ecasound static libraries.
 
-%description -l pl -n libecasound-static
+%description -n libecasound-static -l pl
 Biblioteki statyczne programu ecasound.
 
 %package plugins
@@ -106,7 +106,7 @@ Requires:	ecasound = %{version}
 This package contains ecasound plugins, which give support for ALSA,
 Audio File Library and aRts.
 
-%description -l pl plugins
+%description plugins -l pl
 Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
 wspó³pracê z bibliotekami takich projektów jak ALSA, Audio File
 Library oraz aRts.
@@ -120,7 +120,7 @@ Group:		Development/Languages/Python
 %description -n python-%{name}
 Python module for Ecasound library.
 
-%description -l pl -n python-%{name}
+%description -n python-%{name} -l pl
 Modu³ jêzyka Python dla biblioteki programu ecasound.
 
 %prep
