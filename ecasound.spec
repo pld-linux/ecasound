@@ -20,18 +20,19 @@ Requires:	mpg123
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Ecasound is a software package designed for multitrack audio processing.
-It can be used for simple tasks like audio playback, recording and
-format conversions, as well as for multitrack effect processing, mixing,
-recording and signal recycling. Ecasound supports a wide range of audio
-inputs, outputs and effect algorithms. Several open-source audio
-packages, like for instance ALSA, OSS, mpg123, lame, libaudiofile and
-MikMod, are directly supported. One of the advantages of ecasound's
-chain-based design is that effects can easily be combined both in series
-and in parallel. Oscillators and MIDI-CCs can be used for controlling
-effect parameters. Included user-interfaces  are ecasound - a versatile
-console mode interface, qtecasound - a Qt-based X-interface and various
-command-line utils suitable for batch processing.
+Ecasound is a software package designed for multitrack audio
+processing. It can be used for simple tasks like audio playback,
+recording and format conversions, as well as for multitrack effect
+processing, mixing, recording and signal recycling. Ecasound supports
+a wide range of audio inputs, outputs and effect algorithms. Several
+open-source audio packages, like for instance ALSA, OSS, mpg123, lame,
+libaudiofile and MikMod, are directly supported. One of the advantages
+of ecasound's chain-based design is that effects can easily be
+combined both in series and in parallel. Oscillators and MIDI-CCs can
+be used for controlling effect parameters. Included user-interfaces
+are ecasound - a versatile console mode interface, qtecasound - a
+Qt-based X-interface and various command-line utils suitable for batch
+processing.
 
 
 %description -l pl
@@ -40,15 +41,15 @@ byæ u¿ywany tak do prostych zadañ typu odtwarzanie i nagrywanie muzyki
 czy te¿ konwersji pomiêdzy formatami plików muzycznych jak i do
 wielo¶cie¿kowego przetwarzania ...(TODO)...
 
-Ecasound wspiera szerok± gamê ¼róde³ i wyj¶æ d¼wiêku oraz algorytmów do
-jego przetwarzania. Ecasound wspiera wiele wolnych (open source)
+Ecasound wspiera szerok± gamê ¼róde³ i wyj¶æ d¼wiêku oraz algorytmów
+do jego przetwarzania. Ecasound wspiera wiele wolnych (open source)
 projektów, takich jak ALSA, OSS, mpg123, lame, libaudiofile czy te¿
 MikMod. Jedn± z zalet programu ecasound jest mo¿liwo¶æ ³añcuchowego
 (szeregowego) lub równoleg³ego ³±czenia efektów, które mog± byæ
-kontrolowane poprzez oscylatory lub MIDI-CC. Pakiet ten zawiera tekstowy
-interfejs u¿ytkownika oraz kilka innych narzêdzi nadaj±cych siê do
-przetwarzania wsadowego.  Dostêpny jest tak¿e graficzny interfejs
-u¿ytkownika - qtecasound. 
+kontrolowane poprzez oscylatory lub MIDI-CC. Pakiet ten zawiera
+tekstowy interfejs u¿ytkownika oraz kilka innych narzêdzi nadaj±cych
+siê do przetwarzania wsadowego. Dostêpny jest tak¿e graficzny
+interfejs u¿ytkownika - qtecasound.
 
 %package -n libecasound
 Summary:	Ecasound libraries
@@ -84,13 +85,13 @@ Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
 
 %description -n qtecasound
-This is qtecasound, Qt-based X-interface for ecasound. It is
-usable  but  isn't  yet  as powerful  as  the  console  mode
-version. This program features:
+This is qtecasound, Qt-based X-interface for ecasound. It is usable
+but isn't yet as powerful as the console mode version. This program
+features:
 - control panel (start, stop, rewind, forward, ...)
 - session setup (load, save and view chainsetups)
-- chainsetup  view  (add,  remove, attach  and  view  inputs,
-  outputs and chains; enable/disable chains)
+- chainsetup view (add, remove, attach and view inputs, outputs and
+  chains; enable/disable chains)
 - waveform view (supports caching)
 - chain view (chain and effect status)
 
