@@ -1,19 +1,26 @@
+
+%define python_sitepkgsdir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/site-packages/')"`)
+%define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
+%define python_compile python -c "import compileall; compileall.compile_dir('.')"
+
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	1.8.4d15
+Version:	1.8.5d15
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
+Patch0:	%{name}-lib.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	readline-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	audiofile-devel >= 0.1.7
+BuildRequires:	python-devel
 Requires:	lame
 Requires:	mpg123
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -112,8 +119,20 @@ Pakiet ten zawiera wtyczki dla programu ecasound, które umo¿liwiaj±
 wspó³pracê z bibliotekami takich projektów jak ALSA, Audio File
 Library oraz aRts.
 
+%package -n python-%{name}
+Summary:	Python module for Ecasound
+Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
+Group:	Development/Languages/Python
+
+%description -n python-%{name}
+Python module for Ecasound library.
+
+%description -l pl -n python-%{name}
+Modu³ jêzyka Python dla biblioteki programu ecasound.
+
 %prep
 %setup -q
+%patch -p1
 
 %build
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti"
@@ -125,6 +144,13 @@ automake
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
+
+( cd pyecasound
+  %python_compile_opt
+  %python_compile
+  install *.pyc *.pyo $RPM_BUILD_ROOT%{python_sitepkgsdir}
+)
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -138,8 +164,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ecafixdc
 %attr(755,root,root) %{_bindir}/ecanormalize
 %attr(755,root,root) %{_bindir}/ecaplay
+%attr(755,root,root) %{_bindir}/ecasignalview
 %attr(755,root,root) %{_bindir}/ecasound
-%attr(755,root,root) %{_bindir}/ecasound-config
 %{_mandir}/man1/eca*
 %{_mandir}/man5/eca*
 
@@ -152,6 +178,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libecasound-devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ecasound-config
+%attr(755,root,root) %{_bindir}/ecasoundc-config
 %{_includedir}/ecasound/*
 %{_includedir}/kvutils/*
 %attr(755,root,root) %{_libdir}/libkvutils.so
@@ -170,3 +198,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/ecasound-plugins/lib*.so*
 %{_libdir}/ecasound-plugins/lib*.la
 %{_libdir}/ecasound-plugins/lib*.a
+
+%files -n python-%{name}
+%defattr(644,root,root,755)
+%attr(755,root,root) %{python_sitepkgsdir}/*.so
+%{python_sitepkgsdir}/*.pyo
+%{python_sitepkgsdir}/*.pyc
