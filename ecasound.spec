@@ -173,7 +173,7 @@ export LDFLAGS CXXFLAGS
 rm -rf $RPM_BUILD_ROOT
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
 
-strip --strip-unneeded %{_libdir}/lib*.so.*.*
+strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/*/*
 
