@@ -34,7 +34,6 @@ are ecasound - a versatile console mode interface, qtecasound - a
 Qt-based X-interface and various command-line utils suitable for batch
 processing.
 
-
 %description -l pl
 Ecasound jest programem do wielo¶cie¿kowej edycji d¼wiêku, który mo¿e
 byæ u¿ywany tak do prostych zadañ typu odtwarzanie i nagrywanie muzyki
@@ -78,6 +77,20 @@ Ecasound headers.
 %description -l pl -n libecasound-devel
 Pliki nag³ówkowe bibliotek programu ecasound.
 
+%package -n libecasound-static
+Summary:	Ecasound static libraries
+Summary(pl):	Biblioteki statyczne programu ecasound
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Requires:	libecasound-devel = %{version}
+
+%description -n libecasound-static
+Ecasound static libraries.
+
+%description -l pl -n libecasound-static
+Biblioteki statyczne programu ecasound.
+
 %package -n qtecasound
 Summary:	Ecasound QT frontend
 Summary(pl):	Interfejs graficzny dla programu ecasound
@@ -95,8 +108,8 @@ features:
 - waveform view (supports caching)
 - chain view (chain and effect status)
 
-%description -n qtecasound -l pl
-N/A
+%description -l pl -n qtecasound
+N/A.
 
 %package -n libqtecasound
 Summary:	Ecasound QT frontend library
@@ -117,12 +130,27 @@ Summary(pl):	Pliki nag³ówkowe bibliotek interfejsu graficznego programu ecasound
 Group:		Development/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Requires:	ibqtecasound = %{version}
 
 %description -n libqtecasound-devel
 Ecasound QT frontend library headers.
 
 %description -l pl -n libqtecasound-devel
 Pliki nag³ówkowe bibliotek interfejsu graficznego programu ecasound.
+
+%package -n libqtecasound-static
+Summary:	Ecasound QT frontend static library
+Summary(pl):	Biblioteki stayczne interfejsu graficznego programu ecasound
+Group:		Development/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Requires:	libqtecasound-devel = %{version}
+
+%description -n libqtecasound-static
+Ecasound QT frontend static library.
+
+%description -l pl -n libqtecasound-static
+Biblioteki stayczne interfejsu graficznego programu ecasound.
 
 %prep
 %setup -q
@@ -145,10 +173,18 @@ export LDFLAGS CXXFLAGS
 rm -rf $RPM_BUILD_ROOT
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
 
+strip --strip-unneeded %{_libdir}/lib*.so.*.*
+
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/*/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -n libecasound -p /sbin/ldconfig
+%postun -n libecasound -p /sbin/ldconfig
+
+%post   -n libqtecasound -p /sbin/ldconfig
+%postun -n libqtecasound -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -163,15 +199,22 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %dir %{_datadir}/ecasound
 %{_datadir}/ecasound/*
-%attr(755,root,root) %{_libdir}/libkvutils*.so*
-%attr(755,root,root) %{_libdir}/libecasound*.so*
+%attr(755,root,root) %{_libdir}/libkvutils*.so.*.*
+%attr(755,root,root) %{_libdir}/libecasound*.so.*.*
 
 %files -n libecasound-devel
 %defattr(644,root,root,755)
 %{_includedir}/ecasound/[^qe]*
 %{_includedir}/kvutils/*
-%attr(755,root,root) %{_libdir}/libkvutils.a
+%attr(755,root,root) %{_libdir}/libkvutils.so
 %attr(755,root,root) %{_libdir}/libkvutils.la
+%attr(755,root,root) %{_libdir}/libecasound*.so
+%attr(755,root,root) %{_libdir}/libecasound*.la
+
+%files -n libecasound-static
+%defattr(644,root,root,755)
+%{_libdir}/libkvutils.a
+%{_libdir}/libecasound*.a
 
 %files -n qtecasound
 %defattr(644,root,root,755)
@@ -180,10 +223,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libqtecasound
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libqtecasound*.so*
+%attr(755,root,root) %{_libdir}/libqtecasound*.so.*.*
 
 %files -n libqtecasound-devel
 %defattr(644,root,root,755)
 %{_includedir}/ecasound/qe*
-%attr(755,root,root) %{_libdir}/libqtecasound*.a
+%attr(755,root,root) %{_libdir}/libqtecasound*.so
 %attr(755,root,root) %{_libdir}/libqtecasound*.la
+
+%files -n libqtecasound-static
+%defattr(644,root,root,755)
+%{_libdir}/libqtecasound*.a
