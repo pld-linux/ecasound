@@ -1,15 +1,9 @@
 
-%define python_sitepkgsdir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/site-packages/')"`)
-%define python_ver %(echo `python -c "import sys; print sys.version[:3]"`)
-%define python_basedir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3])"`)
-%define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
-%define python_compile python -c "import compileall; compileall.compile_dir('.')"
-
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.0.3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
@@ -29,10 +23,13 @@ BuildRequires:	readline-devel >= 4.2
 %endif
 BuildRequires:	audiofile-devel >= 0.2.0
 BuildRequires:	python-devel >= 2.1
+BuildRequires:	rpm-pythonprov
 Requires:	lame
 Requires:	mpg123
 Requires:	libecasound = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%include /usr/lib/rpm/macros.python
 
 %description
 Ecasound is a software package designed for multitrack audio
@@ -172,23 +169,21 @@ automake -a -c
 CXXFLAGS="%{rpmcflags} -D_REENTRANT"
 %configure \
 	--enable-sys-readline \
-	--with-python-includes=%{_includedir}/python%{python_ver} \
-	--with-python-modules=%{python_basedir} \
+	--with-python-includes=%{py_incdir} \
+	--with-python-modules=%{py_libdir} \
 	%{?_without_alsa:--disable-alsa}
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__install} -d $RPM_BUILD_ROOT%{python_sitepkgsdir}
+%{__install} -d $RPM_BUILD_ROOT%{py_sitedir}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
 
-( cd pyecasound
-  %python_compile_opt
-  %python_compile
-  install *.pyc *.pyo $RPM_BUILD_ROOT%{python_sitepkgsdir}
-)
+install pyecasound/*.py $RPM_BUILD_ROOT%{py_sitedir}
+%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
+%py_comp $RPM_BUILD_ROOT%{py_sitedir}
 
 %post   -n libecasound -p /sbin/ldconfig
 %postun -n libecasound -p /sbin/ldconfig
@@ -229,7 +224,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libkvutils.a
 %{_libdir}/libecasound.a
-%{python_basedir}/lib-dynload/*.a
+%{py_dyndir}/*.a
 
 %files plugins
 %defattr(644,root,root,755)
@@ -240,5 +235,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{python_basedir}/lib-dynload/*.so
-%{python_sitepkgsdir}/*.py[co]
+%attr(755,root,root) %{py_dyndir}/*.so
+%{py_sitedir}/*.py[co]
