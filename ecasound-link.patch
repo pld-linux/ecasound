@@ -1,12 +1,91 @@
-diff -Nur ecasound-2.2.0-pre3.orig/libecasoundc/Makefile.am ecasound-2.2.0-pre3/libecasoundc/Makefile.am
---- ecasound-2.2.0-pre3.orig/libecasoundc/Makefile.am	Thu Oct 17 18:49:29 2002
-+++ ecasound-2.2.0-pre3/libecasoundc/Makefile.am	Fri Oct 25 13:07:49 2002
-@@ -52,7 +52,7 @@
- # ----------------------------------------------------------------------
+diff -Nur ecasound-2.2.0.orig/configure.in ecasound-2.2.0/configure.in
+--- ecasound-2.2.0.orig/configure.in	Thu Jan  9 21:24:30 2003
++++ ecasound-2.2.0/configure.in	Sat Feb 15 11:10:34 2003
+@@ -629,8 +629,8 @@
+      [AC_CHECK_HEADER(readline/history.h,,
+        AC_MSG_ERROR([*** readline history headers not installed ***]))])
  
- libecasoundc_la_SOURCES = $(ecasoundc_src)
--libecasoundc_la_LIBADD =
-+libecasoundc_la_LIBADD = ../libecasound/libecasound.la
- libecasoundc_la_LDFLAGS = -export-dynamic $(eca_ldflags)
- libecasoundc_debug_la_SOURCES = $(libecasoundc_la_SOURCES)
- libecasoundc_debug_la_LIBADD =
+-  AC_CHECK_LIB(readline, main,, AC_MSG_ERROR([*** readline support not installed ***]))
+-  AC_CHECK_LIB(history, main,, AC_MSG_ERROR([*** readline history support not installed ***]))
++  AC_CHECK_LIB(readline, main, true, AC_MSG_ERROR([*** readline support not installed ***]))
++  AC_CHECK_LIB(history, main, true, AC_MSG_ERROR([*** readline history support not installed ***]))
+   AC_SUBST(ECA_S_READLINE_INCLUDES)
+ else
+   AC_CONFIG_SUBDIRS(readline-4.0)
+diff -Nur ecasound-2.2.0.orig/ecasound/Makefile.am ecasound-2.2.0/ecasound/Makefile.am
+--- ecasound-2.2.0.orig/ecasound/Makefile.am	Wed Oct 30 19:39:32 2002
++++ ecasound-2.2.0/ecasound/Makefile.am	Sat Feb 15 11:11:34 2003
+@@ -43,11 +43,11 @@
+ 
+ if ECA_AM_SYSTEM_READLINE
+ ecasound_LDFLAGS = -export-dynamic
+-ecasound_LDADD = $(termcap_library) \
++ecasound_LDADD = $(termcap_library) -lreadline -lhistory \
+ 		$(top_builddir)/libecasound/libecasound.la \
+ 		$(top_builddir)/kvutils/libkvutils.la
+ ecasound_debug_LDFLAGS = $(ecasound_LDFLAGS)
+-ecasound_debug_LDADD = $(termcap_library) \
++ecasound_debug_LDADD = $(termcap_library) -lreadline -lhistory \
+ 	 	$(top_builddir)/libecasound/libecasound_debug.la \
+ 		$(top_builddir)/kvutils/libkvutils_debug.la
+ 
+diff -Nur ecasound-2.2.0.orig/kvutils/Makefile.am ecasound-2.2.0/kvutils/Makefile.am
+--- ecasound-2.2.0.orig/kvutils/Makefile.am	Tue Nov  5 02:05:17 2002
++++ ecasound-2.2.0/kvutils/Makefile.am	Sat Feb 15 11:07:24 2003
+@@ -41,13 +41,13 @@
+ 			kvu_value_queue.h
+ 
+ libkvutils_la_SOURCES = $(kvutil_sources) $(kvutil_headers)
+-libkvutils_la_LDFLAGS = -version-info @LIBKVUTILS_VERSION@:0:0 -static
++libkvutils_la_LDFLAGS = -version-info @LIBKVUTILS_VERSION@:0:0
+ 
+ libkvutils_debug_la_SOURCES = $(libkvutils_la_SOURCES)
+ libkvutils_debug_la_LDFLAGS = $(libkvutils_la_LDFLAGS)
+ 
+ libkvutils_tester_SOURCES = libkvutils_tester.cpp
+-libkvutils_tester_LDFLAGS = $(lib_LTLIBRARIES) -static
++libkvutils_tester_LDFLAGS = $(lib_LTLIBRARIES)
+ 
+ noinst_HEADERS = $(kvutil_headers)
+ 
+diff -Nur ecasound-2.2.0.orig/libecasound/Makefile.am ecasound-2.2.0/libecasound/Makefile.am
+--- ecasound-2.2.0.orig/libecasound/Makefile.am	Tue Jan  7 23:35:13 2003
++++ ecasound-2.2.0/libecasound/Makefile.am	Sat Feb 15 11:12:58 2003
+@@ -315,8 +315,8 @@
+ libecasound_la_SOURCES = $(ecasound_common_src)
+ libecasound_debug_la_SOURCES = $(ecasound_common_src)
+ libecasound_la_CFLAGS = $(eca_cxxflags)
+-libecasound_la_LDFLAGS = -export-dynamic $(eca_ldflags) -static
+-libecasound_la_LIBADD = $(eca_libadd)
++libecasound_la_LDFLAGS = -export-dynamic $(eca_ldflags)
++libecasound_la_LIBADD = $(eca_libadd) ../kvutils/libkvutils.la
+ libecasound_debug_la_CFLAGS = $(libecasound_la_CFLAGS)
+ libecasound_debug_la_LDFLAGS = $(libecasound_la_LDFLAGS)
+ libecasound_debug_la_LIBADD = $(libecasound_la_LIBADD)
+diff -Nur ecasound-2.2.0.orig/libecasound/plugins/Makefile.am ecasound-2.2.0/libecasound/plugins/Makefile.am
+--- ecasound-2.2.0.orig/libecasound/plugins/Makefile.am	Thu Oct 17 03:09:07 2002
++++ ecasound-2.2.0/libecasound/plugins/Makefile.am	Sat Feb 15 11:07:34 2003
+@@ -86,7 +86,7 @@
+ libecasound_plugins_la_SOURCES          = audioio_dummy.cpp $(plugin_cond_sources)
+ EXTRA_libecasound_plugins_la_SOURCES    = $(plugin_cond_sources)
+ libecasound_plugins_la_LIBADD		= $(af_libs) $(alsa_libs) $(arts_libs) $(jack_libs)
+-libecasound_plugins_la_LDFLAGS 		= -static
++libecasound_plugins_la_LDFLAGS 		=
+ 
+ libecasound_plugins_debug_la_SOURCES	= $(libecasound_plugins_la_SOURCES)
+ EXTRA_libecasound_plugins_debug_la_SOURCES = $(EXTRA_libecasound_plugins_la_SOURCES)
+diff -Nur ecasound-2.2.0.orig/libecasoundc/Makefile.am ecasound-2.2.0/libecasoundc/Makefile.am
+--- ecasound-2.2.0.orig/libecasoundc/Makefile.am	Mon Dec 16 05:20:39 2002
++++ ecasound-2.2.0/libecasoundc/Makefile.am	Sat Feb 15 11:07:07 2003
+@@ -8,9 +8,9 @@
+ # !!!
+ # remember to update eca-version.cpp
+ if ECA_AM_DEBUG_MODE
+-eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:0 -static
++eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:0
+ else
+-eca_ldflags = -s -version-info @LIBECASOUNDC_VERSION@:0:0 -static
++eca_ldflags = -version-info @LIBECASOUNDC_VERSION@:0:0
+ endif
+ 
+ INCLUDES = -I$(srcdir)

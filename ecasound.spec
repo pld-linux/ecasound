@@ -2,6 +2,7 @@
 #
 # todo:
 # - jack-audio-connection-kit support
+# - ladspa support? (configure checks for LADSPA)
 #
 
 #
@@ -15,7 +16,7 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.2.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
@@ -33,12 +34,7 @@ BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
 Requires:	lame
 Requires:	mpg123
-# libecasound no longer supported
 Obsoletes:	libecasound
-Obsoletes:	libecasound-devel
-# packages depending on libecasound
-Obsoletes:	perl-Audio-Ecasound
-Obsoletes:	php-pecl-ecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -73,6 +69,32 @@ kontrolowane poprzez oscylatory lub MIDI-CC. Pakiet ten zawiera
 tekstowy interfejs u¿ytkownika oraz kilka innych narzêdzi nadaj±cych
 siê do przetwarzania wsadowego. Dostêpny jest tak¿e graficzny
 interfejs u¿ytkownika - qtecasound.
+
+%package devel
+Summary:	Header files for ecasound libraries
+Summary(pl):	Pliki nag³ówkowe bibliotek ecasound
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+Obsoletes:	libecasound-devel
+
+%description devel
+Header files for ecasound libraries.
+
+%description devel -l pl
+Pliki nag³ówkowe bibliotek ecasound.
+
+%package static
+Summary:	Static ecasound libraries
+Summary(pl):	Statyczne biblioteki ecasound
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+Obsoletes:	libecasound-static
+
+%description static
+Static ecasound libraries.
+
+%description static -l pl
+Statyczne biblioteki ecasound.
 
 %package -n python-%{name}
 Summary:	Python module for Ecasound
@@ -109,7 +131,8 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 	--disable-audiofile \
 	--disable-arts \
 	%{?_without_alsa:--disable-alsa} \
-	%{!?_without_alsa:--disable-oss}
+	%{!?_without_alsa:--disable-oss} \
+	--with-largefile
 
 %{__make}
 
@@ -126,14 +149,32 @@ install pyecasound/*.py $RPM_BUILD_ROOT%{py_sitedir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc BUGS NEWS README TODO
 %attr(755,root,root) %{_bindir}/eca*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*
+
 %{_datadir}/ecasound
 
 %{_mandir}/man1/eca*
 %{_mandir}/man5/eca*
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/*-config
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
+%{_includedir}/kvutils
+%{_includedir}/libecasound
+%{_includedir}/libecasoundc
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
