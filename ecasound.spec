@@ -14,7 +14,7 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.2.3
-Release:	3
+Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
@@ -25,14 +25,13 @@ Patch0:		%{name}-link.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ladspa-devel
+BuildRequires:	libsamplerate-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 4.2
 BuildRequires:	rpm-pythonprov
-Requires:	lame
-Requires:	mpg123
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -132,6 +131,7 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 	%{?_without_alsa:--disable-alsa} \
 	%{!?_without_alsa:--disable-oss} \
 	--enable-pyecasound \
+	--enable-samplerate \
 	--with-largefile
 
 %{__make}
