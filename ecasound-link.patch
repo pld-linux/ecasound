@@ -36,7 +36,7 @@ diff -Nur ecasound-2.2.3.orig/libecasound/plugins/Makefile.am ecasound-2.2.3/lib
 @@ -86,7 +86,7 @@
  libecasound_plugins_la_SOURCES          = audioio_dummy.cpp $(plugin_cond_sources)
  EXTRA_libecasound_plugins_la_SOURCES    = $(plugin_cond_sources)
- libecasound_plugins_la_LIBADD		= $(af_libs) $(alsa_libs) $(arts_libs) $(ECA_S_JACK_LIBS)
+ libecasound_plugins_la_LIBADD		= $(af_libs) $(alsa_libs) $(arts_libs) $(sndfile_libs) $(ECA_S_JACK_LIBS)
 -libecasound_plugins_la_LDFLAGS 		= -static
 +libecasound_plugins_la_LDFLAGS 		=
  
