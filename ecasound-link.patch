@@ -16,27 +16,25 @@
  libkvutils_tester_LDADD = $(lib_LTLIBRARIES)
  
  noinst_HEADERS = $(kvutil_headers)
-diff -Nur ecasound-2.2.0.orig/libecasound/Makefile.am ecasound-2.2.0/libecasound/Makefile.am
---- ecasound-2.2.0.orig/libecasound/Makefile.am	Tue Jan  7 23:35:13 2003
-+++ ecasound-2.2.0/libecasound/Makefile.am	Sat Feb 15 11:12:58 2003
-@@ -315,8 +315,8 @@
- libecasound_la_SOURCES = $(ecasound_common_src)
- libecasound_debug_la_SOURCES = $(ecasound_common_src)
- libecasound_la_CFLAGS = $(eca_cxxflags)
+--- ecasound-2.3.4/libecasound/Makefile.am.orig	2004-07-14 00:26:24.000000000 +0200
++++ ecasound-2.3.4/libecasound/Makefile.am	2004-11-06 22:52:39.663482992 +0100
+@@ -326,8 +326,8 @@
+ libecasound_la_SOURCES = $(ecasound_common1_src) $(ecasound_common2_src)
+ libecasound_debug_la_SOURCES = $(ecasound_common1_src) $(ecasound_common2_src)
+ #libecasound_la_CFLAGS =  $(AM_CFLAGS)
 -libecasound_la_LDFLAGS = -export-dynamic $(eca_ldflags) -static
 -libecasound_la_LIBADD = $(eca_libadd)
 +libecasound_la_LDFLAGS = -export-dynamic $(eca_ldflags)
 +libecasound_la_LIBADD = $(eca_libadd) ../kvutils/libkvutils.la
- libecasound_debug_la_CFLAGS = $(libecasound_la_CFLAGS)
+ #libecasound_debug_la_CFLAGS = $(libecasound_la_CFLAGS)
  libecasound_debug_la_LDFLAGS = $(libecasound_la_LDFLAGS)
  libecasound_debug_la_LIBADD = $(libecasound_la_LIBADD)
-diff -Nur ecasound-2.2.3.orig/libecasound/plugins/Makefile.am ecasound-2.2.3/libecasound/plugins/Makefile.am
---- ecasound-2.2.3.orig/libecasound/plugins/Makefile.am	Thu Oct 17 03:09:07 2002
-+++ ecasound-2.2.3/libecasound/plugins/Makefile.am	Sat Feb 15 11:07:34 2003
-@@ -86,7 +86,7 @@
+--- ecasound-2.3.4/libecasound/plugins/Makefile.am.orig	2004-04-21 21:50:47.000000000 +0200
++++ ecasound-2.3.4/libecasound/plugins/Makefile.am	2004-11-06 22:52:59.828417456 +0100
+@@ -88,7 +88,7 @@
  libecasound_plugins_la_SOURCES          = audioio_dummy.cpp $(plugin_cond_sources)
  EXTRA_libecasound_plugins_la_SOURCES    = $(plugin_cond_sources)
- libecasound_plugins_la_LIBADD		= $(af_libs) $(alsa_libs) $(arts_libs) $(sndfile_libs) $(ECA_S_JACK_LIBS)
+ libecasound_plugins_la_LIBADD		= $(ECA_S_EXTRA_LIBS)
 -libecasound_plugins_la_LDFLAGS 		= -static
 +libecasound_plugins_la_LDFLAGS 		=
  
