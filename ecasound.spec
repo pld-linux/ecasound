@@ -75,7 +75,11 @@ Summary:	Header files for ecasound libraries
 Summary(pl):	Pliki nag³ówkowe bibliotek ecasound
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%{?with_alsa:Requires:	alsa-lib-devel}
+%{?with_arts:Requires:	arts-devel}
+%{?with_jack:Requires:	jack-audio-connection-kit-devel}
 Requires:	libsamplerate-devel
+Requires:	libsndfile-devel
 Requires:	libstdc++-devel
 Obsoletes:	libecasound-devel
 
