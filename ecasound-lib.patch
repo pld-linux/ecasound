@@ -1,0 +1,31 @@
+diff -Nur ecasound-1.8.5d15.orig/libecasoundc/Makefile.am ecasound-1.8.5d15/libecasoundc/Makefile.am
+--- ecasound-1.8.5d15.orig/libecasoundc/Makefile.am	Mon Nov 27 04:13:33 2000
++++ ecasound-1.8.5d15/libecasoundc/Makefile.am	Wed Dec 27 20:32:32 2000
+@@ -9,10 +9,10 @@
+ # remember to update eca-version.cpp
+ if INCLUDE_DEBUG
+ eca_ldflags = -version-info 0:0:0
+-ecasound_libs = -lecasound_debug
++ecasound_libs = -L$(top_srcdir)/libecasound/.libs -lecasound_debug
+ else
+ eca_ldflags = -s -version-info 0:0:0
+-ecasound_libs = -lecasound
++ecasound_libs = -L$(top_srcdir)/libecasound/.libs -lecasound
+ endif
+ 
+ if KVUTILS_INSTALLED
+diff -Nur ecasound-1.8.5d15.orig/pyecasound/Makefile.am ecasound-1.8.5d15/pyecasound/Makefile.am
+--- ecasound-1.8.5d15.orig/pyecasound/Makefile.am	Wed Dec  6 02:46:42 2000
++++ ecasound-1.8.5d15/pyecasound/Makefile.am	Wed Dec 27 21:01:08 2000
+@@ -6,9 +6,9 @@
+ # ----------------------------------------------------------------------
+ 
+ if INCLUDE_DEBUG
+-ecasound_libs 			= -lecasound_debug
++ecasound_libs 			= -L$(top_srcdir)/libecasound/.libs -lecasound_debug
+ else
+-ecasound_libs 			= -lecasound
++ecasound_libs 			= -L$(top_srcdir)/libecasound/.libs -lecasound
+ endif
+ 
+ if KVUTILS_INSTALLED
