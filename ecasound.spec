@@ -71,8 +71,12 @@ Summary:	Ecasound libraries
 Summary(pl):	Biblioteki programu ecasound
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Разработка/Библиотеки
+Group(uk):	Розробка/Б╕бл╕отеки
 
 %description -n libecasound
 Ecasound libraries.
@@ -85,8 +89,12 @@ Summary:	Ecasound headers
 Summary(pl):	Pliki nagЁСwkowe bibliotek programu ecasound
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Разработка/Библиотеки
+Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	libecasound = %{version}
 
 %description -n libecasound-devel
@@ -100,8 +108,12 @@ Summary:	Ecasound static libraries
 Summary(pl):	Biblioteki statyczne programu ecasound
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Разработка/Библиотеки
+Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	libecasound-devel = %{version}
 
 %description -n libecasound-static
