@@ -16,9 +16,7 @@ Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	fb440a68466c8bd6f7bc8a14adf46ef7
 Patch0:		%{name}-link.patch
-%ifnarch sparc sparc64
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
-%endif
 %{?with_arts:BuildRequires:	arts-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
