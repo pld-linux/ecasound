@@ -1,20 +1,22 @@
 #
 # Conditional build:
-%{?_without_alsa:%global _without_jack 1}
 %bcond_without	alsa		# without ALSA support (implies without JACK)
 %bcond_without	jack		# without JACK support
 %bcond_with	arts		# with aRts support
 #
+%if %{without alsa}
+%undefine	with_jack
+%endif
 %include	/usr/lib/rpm/macros.python
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.3.0
+Version:	2.3.1
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	fb440a68466c8bd6f7bc8a14adf46ef7
+# Source0-md5:	03729504e65bb1110a6dc7ff19ffa01c
 Patch0:		%{name}-link.patch
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	arts-devel}
@@ -127,6 +129,7 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 	%{!?with_jack:--disable-jack} \
 	%{?with_alsa:--disable-oss} \
 	--enable-samplerate \
+	--enable-shared \
 	--enable-sys-readline \
 	--enable-pyecasound \
 	--with-largefile \

@@ -1,20 +1,3 @@
---- ecasound-2.3.0/ecasound/Makefile.am.orig	2003-05-30 02:15:49.000000000 +0200
-+++ ecasound-2.3.0/ecasound/Makefile.am	2003-09-07 14:39:50.724992384 +0200
-@@ -44,12 +44,12 @@
- if ECA_AM_SYSTEM_READLINE
- ecasound_LDFLAGS = -export-dynamic
- ecasound_LDADD = $(termcap_library) \
--		$(readline_library} -lreadline -lhistory \
-+		$(readline_library) -lreadline -lhistory \
- 		$(top_builddir)/libecasound/libecasound.la \
- 		$(top_builddir)/kvutils/libkvutils.la
- ecasound_debug_LDFLAGS = $(ecasound_LDFLAGS)
- ecasound_debug_LDADD = $(termcap_library) \
--		$(readline_library} -lreadline -lhistory \
-+		$(readline_library) -lreadline -lhistory \
- 	 	$(top_builddir)/libecasound/libecasound_debug.la \
- 		$(top_builddir)/kvutils/libkvutils_debug.la
- 
 --- ecasound-2.3.0.orig/kvutils/Makefile.am	Tue Nov  5 02:05:17 2002
 +++ ecasound-2.3.0/kvutils/Makefile.am	Sat Feb 15 11:07:24 2003
 @@ -41,13 +41,13 @@
@@ -73,14 +56,3 @@ diff -Nur ecasound-2.2.3.orig/libecasound/plugins/Makefile.am ecasound-2.2.3/lib
  endif
  
  INCLUDES = -I$(srcdir)
---- ecasound-2.2.3/pyecasound/Makefile.am.orig	2003-04-02 21:37:45.000000000 +0200
-+++ ecasound-2.2.3/pyecasound/Makefile.am	2003-05-10 20:48:34.000000000 +0200
-@@ -50,7 +50,7 @@
- all: pyecasound.so
- 
- pyecasound.so: pyecasound.lo
--	$(CC) -o pyecasound.so -shared -nostartfiles $(libpyecasound_la_LDFLAGS) pyecasound.lo $(top_builddir)/libecasoundc/ecasoundc_sa.lo
-+	$(LINK) -o pyecasound.so -shared -nostartfiles $(libpyecasound_la_LDFLAGS) pyecasound.lo $(top_builddir)/libecasoundc/ecasoundc_sa.lo
- endif
- 
- # ----------------------------------------------------------------------
