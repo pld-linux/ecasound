@@ -2,17 +2,18 @@
 # Conditional build:
 # _without_alsa	- without ALSA support
 #
+
 %include	/usr/lib/rpm/macros.python
+
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.1dev9
-Release:	2
+Version:	2.1dev10
+Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-Patch0:		%{name}-readline.patch
-Patch1:		%{name}-installfix.patch
+Patch0:		%{name}-installfix.patch
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
 %endif
@@ -143,7 +144,7 @@ wspó³pracê z bibliotek± Audio File.
 Summary:	Python module for Ecasound
 Summary(pl):	Modu³ jêzyka Python dla biblioteki programu ecasound
 Group:		Libraries/Python
-%pyrequires_eq	python
+%pyrequires_eq	python-modules
 
 %description -n python-%{name}
 Python module for Ecasound library.
@@ -154,7 +155,6 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 rm -f missing
