@@ -1,11 +1,12 @@
---- ecasound-2.1dev10/libecasoundc/Makefile.am.orig	Sun Apr 28 21:50:42 2002
-+++ ecasound-2.1dev10/libecasoundc/Makefile.am	Sun Aug  4 20:44:32 2002
-@@ -39,7 +39,7 @@
+diff -Nur ecasound-2.2.0-pre3.orig/libecasoundc/Makefile.am ecasound-2.2.0-pre3/libecasoundc/Makefile.am
+--- ecasound-2.2.0-pre3.orig/libecasoundc/Makefile.am	Thu Oct 17 18:49:29 2002
++++ ecasound-2.2.0-pre3/libecasoundc/Makefile.am	Fri Oct 25 13:07:49 2002
+@@ -52,7 +52,7 @@
  # ----------------------------------------------------------------------
  
- libecasoundc2_la_SOURCES = $(ecasoundc_src)
--libecasoundc2_la_LIBADD =
-+libecasoundc2_la_LIBADD = ../libecasound/libecasound8.la
- libecasoundc2_la_LDFLAGS = -export-dynamic $(eca_ldflags)
- libecasoundc2_debug_la_SOURCES = $(libecasoundc2_la_SOURCES)
- libecasoundc2_debug_la_LIBADD =
+ libecasoundc_la_SOURCES = $(ecasoundc_src)
+-libecasoundc_la_LIBADD =
++libecasoundc_la_LIBADD = ../libecasound/libecasound.la
+ libecasoundc_la_LDFLAGS = -export-dynamic $(eca_ldflags)
+ libecasoundc_debug_la_SOURCES = $(libecasoundc_la_SOURCES)
+ libecasoundc_debug_la_LIBADD =
