@@ -17,6 +17,7 @@ Patch0:		%{name}-am_fix.patch
 Patch1:		%{name}-ac_fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libtool
 BuildRequires:	readline-devel >= 4.2
 %ifnarch sparc sparc64
 BuildRequires:	alsa-lib-devel
@@ -140,6 +141,8 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %patch1 -p1
 
 %build
+rm missing
+libtoolize --copy --force
 aclocal
 autoconf
 automake -a -c
