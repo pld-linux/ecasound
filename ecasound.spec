@@ -10,12 +10,12 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.3.2
-Release:	2
+Version:	2.3.4
+Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	624ea41e87dc0cca73cf2057c053d4a7
+# Source0-md5:	4d8e319b6c231acfe4884cc24114cace
 Patch0:		%{name}-link.patch
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	arts-devel}
@@ -74,7 +74,7 @@ interfejs u¿ytkownika - qtecasound.
 Summary:	Header files for ecasound libraries
 Summary(pl):	Pliki nag³ówkowe bibliotek ecasound
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	libsamplerate-devel
 Requires:	libstdc++-devel
 Obsoletes:	libecasound-devel
@@ -89,7 +89,7 @@ Pliki nag³ówkowe bibliotek ecasound.
 Summary:	Static ecasound libraries
 Summary(pl):	Statyczne biblioteki ecasound
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	libecasound-static
 
 %description static
@@ -102,7 +102,7 @@ Statyczne biblioteki ecasound.
 Summary:	Python module for Ecasound
 Summary(pl):	Modu³ jêzyka Python dla programu ecasound
 Group:		Libraries/Python
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 %pyrequires_eq	python-modules
 
 %description -n python-%{name}
@@ -115,7 +115,7 @@ Modu³ jêzyka Python dla programu ecasound.
 Summary:	Ruby module for Ecasound
 Summary(pl):	Modu³ jêzyka Ruby dla programu ecasound
 Group:		Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 %requires_eq	ruby
 
 %description -n ruby-%{name}
