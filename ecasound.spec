@@ -147,7 +147,7 @@ LDFLAGS="-s"
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti"
 export LDFLAGS CXXFLAGS
 %configure \
-	--with-qt-includes=%{_prefix}/X11R6/include 
+	--with-qt-includes=%{_prefix}/X11R6/include \
 	--with-qt-libraries=%{_prefix}/X11R6/lib \
 	--enable-sys-readline
 %{__make}
