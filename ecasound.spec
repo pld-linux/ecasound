@@ -190,9 +190,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ecasound
 %{_includedir}/kvutils
 %attr(755,root,root) %{_libdir}/libkvutils.so
-%attr(755,root,root) %{_libdir}/libkvutils.la
+%{_libdir}/libkvutils.la
 %attr(755,root,root) %{_libdir}/libecasound*.so
-%attr(755,root,root) %{_libdir}/libecasound*.la
+%{_libdir}/libecasound*.la
 
 %files -n libecasound-static
 %defattr(644,root,root,755)
