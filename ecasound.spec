@@ -13,6 +13,7 @@ Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
+patch0:		%{name}-am_fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ncurses-devel >= 5.0
@@ -135,18 +136,20 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 aclocal
 autoconf
 automake -a -c
-CXXFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g} -fno-rtti"
+CXXFLAGS="%{!?debug:$RPM_OPT_FLAGS -fno-rtti}%{?debug:-O0 -g} -D_REENTRANT"
 %configure \
 	--enable-sys-readline
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} install
 
 ( cd pyecasound
