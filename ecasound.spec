@@ -11,6 +11,7 @@ Patch0:		%{name}-am_fix.patch
 Patch1:		%{name}-ac_fix.patch
 Patch2:		%{name}-readline.patch
 Patch3:		%{name}-am15.patch
+Patch4:		%{name}-comment.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	audiofile-devel >= 0.2.0
@@ -129,6 +130,7 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 rm missing
