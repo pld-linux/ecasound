@@ -137,7 +137,7 @@ libtoolize --copy --force
 %endif
 aclocal
 autoconf
-automake -a -c
+automake -a -c -f
 CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
 %configure \
 	--enable-sys-readline \
