@@ -7,17 +7,17 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	1.9dev1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Sound
 Group(de):	Applikationen/Laut
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-patch0:		%{name}-am_fix.patch
+Patch0:		%{name}-am_fix.patch
+Patch1:		%{name}-ac_fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	ncurses-devel >= 5.0
-BuildRequires:	readline-devel
+BuildRequires:	readline-devel >= 4.2
 %ifnarch sparc sparc64
 BuildRequires:	alsa-lib-devel
 %endif
@@ -136,13 +136,14 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 aclocal
 autoconf
 automake -a -c
-CXXFLAGS="%{!?debug:$RPM_OPT_FLAGS -fno-rtti}%{?debug:-O0 -g} -D_REENTRANT"
+CXXFLAGS="%{rpmcflags} -D_REENTRANT"
 %configure \
 	--enable-sys-readline
 %{__make}
@@ -158,12 +159,11 @@ rm -rf $RPM_BUILD_ROOT
   install *.pyc *.pyo $RPM_BUILD_ROOT%{python_sitepkgsdir}
 )
 
+%post   -n libecasound -p /sbin/ldconfig
+%postun -n libecasound -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post   -n libecasound -p /sbin/ldconfig
-%postun -n libecasound -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
