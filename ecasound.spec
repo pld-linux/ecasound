@@ -10,11 +10,12 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.1dev10
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 Patch0:		%{name}-installfix.patch
+Patch1:		%{name}-link.patch
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
 %endif
@@ -23,7 +24,7 @@ BuildRequires:	audiofile-devel >= 0.2.0
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
+BuildRequires:	libtool >= 1:1.4d-3
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 4.2
@@ -156,12 +157,11 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 rm -f missing
-%ifarch sparc sparc64
 %{__libtoolize}
-%endif
 aclocal
 %{__autoconf}
 %{__automake}
@@ -192,7 +192,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc examples.html
+%doc BUGS NEWS README TODO
 %attr(755,root,root) %{_bindir}/eca*
 %{_mandir}/man1/eca*
 %{_mandir}/man5/eca*
