@@ -239,5 +239,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_dyndir}/*.so
+%attr(755,root,root) %{py_sitedir}/*.so
 %{py_sitedir}/*.py[co]
