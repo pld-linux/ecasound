@@ -1,6 +1,6 @@
---- ecasound-1.9dev1/configure.in~	Wed Feb  7 04:36:48 2001
-+++ ecasound-1.9dev1/configure.in	Sat Apr 21 09:46:51 2001
-@@ -70,14 +70,6 @@
+--- ecasound-2.1.0/configure.in.orig	Sun Oct  7 17:39:44 2001
++++ ecasound-2.1.0/configure.in	Mon Feb  4 04:13:30 2002
+@@ -71,15 +71,6 @@
  
  dnl ------------------------------------------------------------------
  
@@ -8,10 +8,11 @@
 -dnl Set CXXFLAGS.
 -dnl ---
 -CXXFLAGS="-O2 -D_REENTRANT -DNDEBUG -ffast-math -fstrict-aliasing -funroll-loops"
--dnl CXXFLAGS="-O2 -D_REENTRANT -fomit-frame-pointer -finline-functions -ffast-math -funroll-loops -Wall -Wstrict-prototypes -pedantic -fstrict-aliasing"
+-CFLAGS="$CXXFLAGS"
+-dnl --- CXXFLAGS="-O2 -D_REENTRANT -fomit-frame-pointer -finline-functions -ffast-math -funroll-loops -Wall -Wstrict-prototypes -pedantic -fstrict-aliasing"
 -
 -dnl ------------------------------------------------------------------
 -
+ AC_MSG_CHECKING(whether to enable debugging)
  AC_ARG_ENABLE(debug,
  [  --enable-debug		Enable debugging (default = no)],
- include_debug=yes)
