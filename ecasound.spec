@@ -18,6 +18,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
+# Source0-md5:	40a3f0213c30b18e1b4e7879faa6b454
 Patch0:		%{name}-link.patch
 %ifnarch sparc sparc64
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
