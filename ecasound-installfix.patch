@@ -1,0 +1,19 @@
+--- ecasound-2.1dev9/libecasound/Makefile.am.orig	Mon May 13 11:45:17 2002
++++ ecasound-2.1dev9/libecasound/Makefile.am	Sun Jun 16 21:17:42 2002
+@@ -127,7 +127,6 @@
+ 			eca-session.h \
+ 			eca-resources.h \
+ 			resource-file.h \
+-			generic-controller.h \
+ 			layer.h \
+ 			eca-static-object-maps.h \
+ 			eca-object-map.h \
+@@ -165,7 +164,6 @@
+ 			preset_impl.h \
+ 			file-preset.h \
+-			global-preset.h \
+-			midiio.h
++			global-preset.h
+ 
+ ecasound_extra_include = \
+ 			ladspa.h
