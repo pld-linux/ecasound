@@ -133,7 +133,7 @@ Modu³ jêzyka Python dla biblioteki programu ecasound.
 %build
 rm missing
 %ifarch sparc sparc64
-libtoolize --copy --force
+%{__libtoolize}
 %endif
 aclocal
 %{__autoconf}
