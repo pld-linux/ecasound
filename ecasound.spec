@@ -140,7 +140,7 @@ rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -fno-rtti"
+CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
 %configure \
 	--enable-sys-readline \
 	--with-python-includes=%{py_incdir} \
