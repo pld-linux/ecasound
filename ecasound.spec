@@ -103,6 +103,7 @@ Statyczne biblioteki ecasound.
 Summary:	Python module for Ecasound
 Summary(pl):	Modu³ jêzyka Python dla programu ecasound
 Group:		Libraries/Python
+Requires:	%{name} = %{version}
 %pyrequires_eq	python-modules
 
 %description -n python-%{name}
@@ -115,6 +116,7 @@ Modu³ jêzyka Python dla programu ecasound.
 Summary:	Ruby module for Ecasound
 Summary(pl):	Modu³ jêzyka Ruby dla programu ecasound
 Group:		Libraries
+Requires:	%{name} = %{version}
 %requires_eq	ruby
 
 %description -n ruby-%{name}
