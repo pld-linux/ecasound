@@ -1,5 +1,6 @@
 
 %define python_sitepkgsdir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/site-packages/')"`)
+%define python_lib-dynloadir %(echo `python -c "import sys; print (sys.prefix + '/lib/python' + sys.version[:3] + '/lib-dynloa/')"`)
 %define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
 %define python_compile python -c "import compileall; compileall.compile_dir('.')"
 
@@ -215,5 +216,5 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python-%{name}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{python_sitepkgsdir}/*.so
-%{python_sitepkgsdir}/*.pyo
-%{python_sitepkgsdir}/*.pyc
+%{python_lib-dynloadir}/*.pyo
+%{python_lib-dynloadir}/*.pyc
