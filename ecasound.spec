@@ -1,14 +1,14 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	1.7.8r12
+Version:	1.8.0d14
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-Patch0:		ecasound-ncurses_and_sys_readline.patch.bz2
-Patch1:		ecasound-DESTDIR.patch.bz2
+Patch0:		ecasound-ncurses.patch.bz2
+Patch1:		ecasound-kvutils.patch.bz2
 BuildRequires:	qt-devel >= 2.0
 BuildRequires:	audiofile-devel >= 0.1.7
 BuildRequires:	readline-devel
@@ -20,46 +20,24 @@ Requires:	mpg123
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Ecasound is the software package for multitrack audio processing.
+Ecasound is a software package designed for multitrack audio
+processing.  It can  be  used for  simple  tasks like  audio playback,
+recording  and  format conversions,  as  well  as for  multitrack
+effect  processing, mixing, recording  and signal recycling.  Ecasound
+supports  a wide range  of audio inputs, outputs  and effect
+algorithms.  Several open-source audio packages, like for instance
+ALSA,  OSS, mpg123, lame, libaudiofile and MikMod, are directly
+supported. One of the advantages of ecasound's chain-based  design is
+that effects can  easily be  combined  both in  series  and in
+parallel.  Oscillators and MIDI-CCs can  be used for controlling
+effect parameters.  Included  user-interfaces   are  ecasound  -  a
+versatile console  mode interface,  qtecasound -  a Qt-based
+X-interface  and  various  command-line utils  suitable  for batch
+processing.
 
-1. Supported audio inputs/outputs:
-- ALSA - Advanced Linux Sound Architecture (PCM input, output and
-  loopback support)
-- OSS (/dev/dsp*) - Open Sound System
-- RIFF WAVE (.wav) - 8/16bit non-compressed
-- Ecasound Wave Files (.ewf) - simple wrapper format for recording
-  purposes
-- Raw/headerless sample data (.raw)
-- CDDA (.cdr) - format used on audio-CDs
-- MPEG 1.0/2.0 (layers 1, 2 and 3) (.mp3) - using mpg123 for input and
-  lame for output
-- Module formats supported by MikMod - XM, IT, S3M, MOD, MTM, 669,
-  STM, ULT, FAR, MED, AMF, DSM, IMF, GDM, STX
-- AIFF (.aiff) and Sun/NeXT audio (.au/.snd) formats using
-  libaudiofile:
-- standard input/output streams (stdin, stdout) and named pipes 2.
-  Effects:
-- Various amplifiers, panning, DC-fix, volume normalization
-- Channel mixing and routing
-- Noise gate, two compressors
-- Filters: lowpass, highpass, bandpass, bandreject, resonant lowpass,
-  resonant bandpass, resonator, inverse comb
-- Time-based: multitap delay, reverb, fake-stereo 3. Controllers (for
-  effect parameters):
-- sine oscillator
-- generic oscillator (either using an envelope table with static
-  points or with linear interpolation)
-- linear envelopes
-- MIDI continuous controllers (CC)
-
-This package contains ecasound with interactive textmode user program
-and utilites which support batch processing:
-- ecatools_fixdc: fix DC-offset
-- ecatools_normalize: normalize volume level
-- ecatools_play: play files using the default output
 
 %description -l pl
-N/A
+Ecasound jest programem do wielo¶cie¿kowej edycji d¼wiêku.
 
 %package -n libecasound
 Summary:	Ecasound libraries
@@ -95,13 +73,13 @@ Group:		Applications/Sound
 Group(pl):	Aplikacje/D¼wiêk
 
 %description -n qtecasound
-This is qtecasound, Qt-based X-interface for ecasound. It is usable
-but isn't yet as powerful as the console mode version. This program
-features:
+This is qtecasound, Qt-based X-interface for ecasound. It is
+usable  but  isn't  yet  as powerful  as  the  console  mode
+version. This program features:
 - control panel (start, stop, rewind, forward, ...)
 - session setup (load, save and view chainsetups)
-- chainsetup view (add, remove, attach and view inputs, outputs and
-  chains; enable/disable chains)
+- chainsetup  view  (add,  remove, attach  and  view  inputs,
+  outputs and chains; enable/disable chains)
 - waveform view (supports caching)
 - chain view (chain and effect status)
 
@@ -133,7 +111,6 @@ Ecasound QT frontend library headers.
 
 %description -l pl -n libqtecasound-devel
 Pliki nag³ówkowe bibliotek interfejsu graficznego programu ecasound.
-
 
 %prep
 %setup -q
