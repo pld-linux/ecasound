@@ -9,7 +9,7 @@ Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
 Version:	2.4.3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
@@ -28,7 +28,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
-BuildRequires:	readline-devel >= 4.2
+BuildRequires:	readline-devel >= 5.0
 %{?with_ruby:BuildRequires:	ruby}
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
