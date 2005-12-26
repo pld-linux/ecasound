@@ -30,12 +30,9 @@ BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 5.0
 %{?with_ruby:BuildRequires:	ruby}
+%{?with_ruby:BuildRequires:	rpmbuild(macros) >= 1.272}
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%if %{with ruby}
-%define		ruby_sitelibdir	%(ruby -r rbconfig -e 'print Config::CONFIG["sitelibdir"]')
-%endif
 
 %description
 Ecasound is a software package designed for multitrack audio
