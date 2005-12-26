@@ -1,0 +1,3 @@
+- BuildRequires: libstdc++-devel
+- fixed python stuff in %install and %files
+- base package Requires: libecasound
