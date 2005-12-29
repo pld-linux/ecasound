@@ -29,8 +29,11 @@ BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 5.0
-%{?with_ruby:BuildRequires:	ruby}
-%{?with_ruby:BuildRequires:	rpmbuild(macros) >= 1.272}
+%if %{with ruby}
+BuildRequires:	rpmbuild(macros) >= 1.277
+BuildRequires:	ruby-devel
+%ruby_mod_ver_requires_eq
+%endif
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
