@@ -32,7 +32,6 @@ BuildRequires:	readline-devel >= 5.0
 %if %{with ruby}
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
-%{?ruby_mod_ver_requires_eq}
 %endif
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -120,7 +119,7 @@ Summary:	Ruby module for Ecasound
 Summary(pl):	Modu³ jêzyka Ruby dla programu ecasound
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-%requires_eq	ruby
+%{?ruby_mod_ver_requires_eq}
 
 %description -n ruby-%{name}
 Ruby module for Ecasound.
