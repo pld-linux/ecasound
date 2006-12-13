@@ -16,7 +16,7 @@ Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	b5a4f39245e505941f26c5c2c3b80e1c
 Patch0:		%{name}-link.patch
 URL:		http://ecasound.seul.org/
-%{?with_alsa:BuildRequires:	alsa-lib-devel}
+%{?with_alsa:BuildRequires:	alsa-lib-devel >= 0.9.0}
 %{?with_arts:BuildRequires:	arts-devel}
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1.6.1
