@@ -8,22 +8,22 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
 Name:		ecasound
-Version:	2.4.4
+Version:	2.4.5
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	3032a157f736bb38426b2ebcc92c6513
+# Source0-md5:	b5a4f39245e505941f26c5c2c3b80e1c
 Patch0:		%{name}-link.patch
 URL:		http://ecasound.seul.org/
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	arts-devel}
 BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake >= 1.6
+BuildRequires:	automake >= 1.6.1
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
 BuildRequires:	ladspa-devel
 BuildRequires:	libsamplerate-devel
-BuildRequires:	libsndfile-devel
+BuildRequires:	libsndfile-devel >= 1.0.12
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	python-devel >= 2.2
@@ -42,13 +42,13 @@ processing. It can be used for simple tasks like audio playback,
 recording and format conversions, as well as for multitrack effect
 processing, mixing, recording and signal recycling. Ecasound supports
 a wide range of audio inputs, outputs and effect algorithms. Several
-open-source audio packages, like for instance ALSA, OSS, mpg123, lame,
-libaudiofile and MikMod, are directly supported. One of the advantages
-of ecasound's chain-based design is that effects can easily be
-combined both in series and in parallel. Oscillators and MIDI-CCs can
-be used for controlling effect parameters. Included user-interfaces
-are ecasound - a versatile console mode interface, qtecasound - a
-Qt-based X-interface and various command-line utils suitable for batch
+open-source audio packages, like for instance ALSA, OSS, mpg123, lame
+and MikMod, are directly supported. One of the advantages of
+ecasound's chain-based design is that effects can easily be combined
+both in series and in parallel. Oscillators and MIDI-CCs can be used
+for controlling effect parameters. Included user-interfaces are
+ecasound - a versatile console mode interface, ecawave - a Qt-based
+X-interface and various command-line utils suitable for batch
 processing.
 
 %description -l pl
@@ -61,13 +61,13 @@ wyrzucania zniekszta³ceñ) sygna³u.
 
 Ecasound wspiera szerok± gamê ¼róde³ i wyj¶æ d¼wiêku oraz algorytmów
 do jego przetwarzania. Ecasound wspiera wiele wolnych (open source)
-projektów, takich jak ALSA, OSS, mpg123, lame, libaudiofile czy te¿
-MikMod. Jedn± z zalet programu ecasound jest mo¿liwo¶æ ³añcuchowego
-(szeregowego) lub równoleg³ego ³±czenia efektów, które mog± byæ
-kontrolowane poprzez oscylatory lub MIDI-CC. Pakiet ten zawiera
-tekstowy interfejs u¿ytkownika oraz kilka innych narzêdzi nadaj±cych
-siê do przetwarzania wsadowego. Dostêpny jest tak¿e graficzny
-interfejs u¿ytkownika - qtecasound.
+projektów, takich jak ALSA, OSS, mpg123, lame czy te¿ MikMod. Jedn± z
+zalet programu ecasound jest mo¿liwo¶æ ³añcuchowego (szeregowego) lub
+równoleg³ego ³±czenia efektów, które mog± byæ kontrolowane poprzez
+oscylatory lub MIDI-CC. Pakiet ten zawiera tekstowy interfejs
+u¿ytkownika oraz kilka innych narzêdzi nadaj±cych siê do przetwarzania
+wsadowego. Dostêpny jest tak¿e graficzny, oparty na Qt interfejs
+u¿ytkownika - ecawave.
 
 %package devel
 Summary:	Header files for ecasound libraries
@@ -169,6 +169,7 @@ install -d $RPM_BUILD_ROOT%{py_sitedir}
 install pyecasound/*.py $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
+%py_postclean
 
 %clean
 rm -rf $RPM_BUILD_ROOT
