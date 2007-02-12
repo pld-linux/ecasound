@@ -6,7 +6,7 @@
 %bcond_with	arts		# with aRts support
 #
 Summary:	Software package for multitrack audio processing
-Summary(pl.UTF-8):   Oprogramowanie do wielościeżkowego przetwarzania dźwięku
+Summary(pl.UTF-8):	Oprogramowanie do wielościeżkowego przetwarzania dźwięku
 Name:		ecasound
 Version:	2.4.5
 Release:	2
@@ -71,7 +71,7 @@ użytkownika - ecawave.
 
 %package devel
 Summary:	Header files for ecasound libraries
-Summary(pl.UTF-8):   Pliki nagłówkowe bibliotek ecasound
+Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek ecasound
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %{?with_alsa:Requires:	alsa-lib-devel}
@@ -90,7 +90,7 @@ Pliki nagłówkowe bibliotek ecasound.
 
 %package static
 Summary:	Static ecasound libraries
-Summary(pl.UTF-8):   Statyczne biblioteki ecasound
+Summary(pl.UTF-8):	Statyczne biblioteki ecasound
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	libecasound-static
@@ -103,7 +103,7 @@ Statyczne biblioteki ecasound.
 
 %package -n python-%{name}
 Summary:	Python module for Ecasound
-Summary(pl.UTF-8):   Moduł języka Python dla programu ecasound
+Summary(pl.UTF-8):	Moduł języka Python dla programu ecasound
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
 %pyrequires_eq	python-modules
@@ -116,7 +116,7 @@ Moduł języka Python dla programu ecasound.
 
 %package -n ruby-%{name}
 Summary:	Ruby module for Ecasound
-Summary(pl.UTF-8):   Moduł języka Ruby dla programu ecasound
+Summary(pl.UTF-8):	Moduł języka Ruby dla programu ecasound
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 %{?ruby_mod_ver_requires_eq}
