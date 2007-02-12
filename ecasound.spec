@@ -6,7 +6,7 @@
 %bcond_with	arts		# with aRts support
 #
 Summary:	Software package for multitrack audio processing
-Summary(pl):	Oprogramowanie do wielo¶cie¿kowego przetwarzania d¼wiêku
+Summary(pl.UTF-8):   Oprogramowanie do wieloÅ›cieÅ¼kowego przetwarzania dÅºwiÄ™ku
 Name:		ecasound
 Version:	2.4.5
 Release:	2
@@ -51,27 +51,27 @@ ecasound - a versatile console mode interface, ecawave - a Qt-based
 X-interface and various command-line utils suitable for batch
 processing.
 
-%description -l pl
-Ecasound jest programem do wielo¶cie¿kowej edycji d¼wiêku, który mo¿e
-byæ u¿ywany tak do prostych zadañ typu odtwarzanie i nagrywanie muzyki
-czy te¿ konwersji pomiêdzy formatami plików muzycznych jak i do
-wielo¶cie¿kowego nak³adania efektów, miksowania (przenikania,
-wyciszania), nagrywania i odzyskiwania (w domy¶le odszumiania lub
-wyrzucania zniekszta³ceñ) sygna³u.
+%description -l pl.UTF-8
+Ecasound jest programem do wieloÅ›cieÅ¼kowej edycji dÅºwiÄ™ku, ktÃ³ry moÅ¼e
+byÄ‡ uÅ¼ywany tak do prostych zadaÅ„ typu odtwarzanie i nagrywanie muzyki
+czy teÅ¼ konwersji pomiÄ™dzy formatami plikÃ³w muzycznych jak i do
+wieloÅ›cieÅ¼kowego nakÅ‚adania efektÃ³w, miksowania (przenikania,
+wyciszania), nagrywania i odzyskiwania (w domyÅ›le odszumiania lub
+wyrzucania znieksztaÅ‚ceÅ„) sygnaÅ‚u.
 
-Ecasound wspiera szerok± gamê ¼róde³ i wyj¶æ d¼wiêku oraz algorytmów
+Ecasound wspiera szerokÄ… gamÄ™ ÅºrÃ³deÅ‚ i wyjÅ›Ä‡ dÅºwiÄ™ku oraz algorytmÃ³w
 do jego przetwarzania. Ecasound wspiera wiele wolnych (open source)
-projektów, takich jak ALSA, OSS, mpg123, lame czy te¿ MikMod. Jedn± z
-zalet programu ecasound jest mo¿liwo¶æ ³añcuchowego (szeregowego) lub
-równoleg³ego ³±czenia efektów, które mog± byæ kontrolowane poprzez
+projektÃ³w, takich jak ALSA, OSS, mpg123, lame czy teÅ¼ MikMod. JednÄ… z
+zalet programu ecasound jest moÅ¼liwoÅ›Ä‡ Å‚aÅ„cuchowego (szeregowego) lub
+rÃ³wnolegÅ‚ego Å‚Ä…czenia efektÃ³w, ktÃ³re mogÄ… byÄ‡ kontrolowane poprzez
 oscylatory lub MIDI-CC. Pakiet ten zawiera tekstowy interfejs
-u¿ytkownika oraz kilka innych narzêdzi nadaj±cych siê do przetwarzania
-wsadowego. Dostêpny jest tak¿e graficzny, oparty na Qt interfejs
-u¿ytkownika - ecawave.
+uÅ¼ytkownika oraz kilka innych narzÄ™dzi nadajÄ…cych siÄ™ do przetwarzania
+wsadowego. DostÄ™pny jest takÅ¼e graficzny, oparty na Qt interfejs
+uÅ¼ytkownika - ecawave.
 
 %package devel
 Summary:	Header files for ecasound libraries
-Summary(pl):	Pliki nag³ówkowe bibliotek ecasound
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe bibliotek ecasound
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %{?with_alsa:Requires:	alsa-lib-devel}
@@ -85,12 +85,12 @@ Obsoletes:	libecasound-devel
 %description devel
 Header files for ecasound libraries.
 
-%description devel -l pl
-Pliki nag³ówkowe bibliotek ecasound.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe bibliotek ecasound.
 
 %package static
 Summary:	Static ecasound libraries
-Summary(pl):	Statyczne biblioteki ecasound
+Summary(pl.UTF-8):   Statyczne biblioteki ecasound
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	libecasound-static
@@ -98,12 +98,12 @@ Obsoletes:	libecasound-static
 %description static
 Static ecasound libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki ecasound.
 
 %package -n python-%{name}
 Summary:	Python module for Ecasound
-Summary(pl):	Modu³ jêzyka Python dla programu ecasound
+Summary(pl.UTF-8):   ModuÅ‚ jÄ™zyka Python dla programu ecasound
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
 %pyrequires_eq	python-modules
@@ -111,12 +111,12 @@ Requires:	%{name} = %{version}-%{release}
 %description -n python-%{name}
 Python module for Ecasound.
 
-%description -n python-%{name} -l pl
-Modu³ jêzyka Python dla programu ecasound.
+%description -n python-%{name} -l pl.UTF-8
+ModuÅ‚ jÄ™zyka Python dla programu ecasound.
 
 %package -n ruby-%{name}
 Summary:	Ruby module for Ecasound
-Summary(pl):	Modu³ jêzyka Ruby dla programu ecasound
+Summary(pl.UTF-8):   ModuÅ‚ jÄ™zyka Ruby dla programu ecasound
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 %{?ruby_mod_ver_requires_eq}
@@ -124,8 +124,8 @@ Requires:	%{name} = %{version}-%{release}
 %description -n ruby-%{name}
 Ruby module for Ecasound.
 
-%description -n ruby-%{name} -l pl
-Modu³ jêzyka Ruby dla programu ecasound.
+%description -n ruby-%{name} -l pl.UTF-8
+ModuÅ‚ jÄ™zyka Ruby dla programu ecasound.
 
 %prep
 %setup -q
