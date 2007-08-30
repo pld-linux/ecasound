@@ -8,12 +8,12 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl.UTF-8):	Oprogramowanie do wielościeżkowego przetwarzania dźwięku
 Name:		ecasound
-Version:	2.4.5
-Release:	2
-License:	GPL
+Version:	2.4.6.1
+Release:	1
+License:	GPL v2+
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	b5a4f39245e505941f26c5c2c3b80e1c
+# Source0-md5:	2bd968cf94405535928cc04143bb89ee
 Patch0:		%{name}-link.patch
 URL:		http://ecasound.seul.org/
 %{?with_alsa:BuildRequires:	alsa-lib-devel >= 0.9.0}
