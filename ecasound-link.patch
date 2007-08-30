@@ -16,17 +16,17 @@
  libkvutils_tester_LDADD = $(lib_LTLIBRARIES)
  
  noinst_HEADERS = $(kvutil_headers)
---- ecasound-2.3.4/libecasound/Makefile.am.orig	2004-07-14 00:26:24.000000000 +0200
-+++ ecasound-2.3.4/libecasound/Makefile.am	2004-11-06 22:52:39.663482992 +0100
-@@ -326,8 +326,8 @@
+--- ecasound-2.4.6.1/libecasound/Makefile.am.orig	2007-04-29 18:04:23.000000000 +0200
++++ ecasound-2.4.6.1/libecasound/Makefile.am	2007-08-30 20:06:48.441627937 +0200
+@@ -339,8 +339,8 @@
  libecasound_la_SOURCES = $(ecasound_common1_src) $(ecasound_common2_src)
  libecasound_debug_la_SOURCES = $(ecasound_common1_src) $(ecasound_common2_src)
- #libecasound_la_CFLAGS =  $(AM_CFLAGS)
+ libecasound_la_CFLAGS =  $(ECA_S_EXTRA_CFLAGS)
 -libecasound_la_LDFLAGS = -export-dynamic $(eca_ldflags) -static
 -libecasound_la_LIBADD = $(eca_libadd)
 +libecasound_la_LDFLAGS = -export-dynamic $(eca_ldflags)
 +libecasound_la_LIBADD = $(eca_libadd) ../kvutils/libkvutils.la
- #libecasound_debug_la_CFLAGS = $(libecasound_la_CFLAGS)
+ libecasound_debug_la_CFLAGS = $(libecasound_la_CFLAGS)
  libecasound_debug_la_LDFLAGS = $(libecasound_la_LDFLAGS)
  libecasound_debug_la_LIBADD = $(libecasound_la_LIBADD)
 --- ecasound-2.3.4/libecasound/plugins/Makefile.am.orig	2004-04-21 21:50:47.000000000 +0200
