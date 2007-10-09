@@ -1,0 +1,2 @@
+- fixed %build: regenerate all autoconf/aumake files for allow build in
+  automake 1.4b environment.
