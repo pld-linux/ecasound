@@ -8,13 +8,14 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl.UTF-8):	Oprogramowanie do wielościeżkowego przetwarzania dźwięku
 Name:		ecasound
-Version:	2.4.6.1
+Version:	2.5.2
 Release:	1
 License:	GPL v2+
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	2bd968cf94405535928cc04143bb89ee
+# Source0-md5:	c7d26db96a7ea5749df9d5137d3c397d
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-acam.patch
 URL:		http://ecasound.seul.org/
 %{?with_alsa:BuildRequires:	alsa-lib-devel >= 0.9.0}
 %{?with_arts:BuildRequires:	arts-devel}
@@ -130,6 +131,7 @@ Moduł języka Ruby dla programu ecasound.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -166,10 +168,10 @@ install -d $RPM_BUILD_ROOT%{py_sitedir}
 	DESTDIR=$RPM_BUILD_ROOT \
 	mandir=%{_mandir}
 
-install pyecasound/*.py $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -181,28 +183,42 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc BUGS NEWS README TODO
 %attr(755,root,root) %{_bindir}/eca*
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libecasound.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libecasound.so.20
+%attr(755,root,root) %{_libdir}/libecasoundc.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libecasoundc.so.1
+%attr(755,root,root) %{_libdir}/libkvutils.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkvutils.so.4
 %{_datadir}/ecasound
-%{_mandir}/man1/eca*
-%{_mandir}/man5/eca*
+%{_mandir}/man1/eca*.1*
+%{_mandir}/man5/ecasoundrc.5*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*-config
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_bindir}/libecasound-config
+%attr(755,root,root) %{_bindir}/libecasoundc-config
+%attr(755,root,root) %{_libdir}/libecasound.so
+%attr(755,root,root) %{_libdir}/libecasoundc.so
+%attr(755,root,root) %{_libdir}/libkvutils.so
+%{_libdir}/libecasound.la
+%{_libdir}/libecasoundc.la
+%{_libdir}/libkvutils.la
 %{_includedir}/kvutils
 %{_includedir}/libecasound
 %{_includedir}/libecasoundc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libecasound.a
+%{_libdir}/libecasoundc.a
+%{_libdir}/libkvutils.a
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/*.so
-%{py_sitedir}/*.py[co]
+%attr(755,root,root) %{py_sitedir}/pyecasound.so
+%{py_sitedir}/ecacontrol.py[co]
+%{py_sitedir}/eci.py[co]
+%{py_sitedir}/pyeca.py[co]
 
 %if %{with ruby}
 %files -n ruby-%{name}
