@@ -1,0 +1,86 @@
+--- ecasound-2.5.2/configure.in.orig	2008-08-24 09:48:18.000000000 +0200
++++ ecasound-2.5.2/configure.in	2008-08-29 19:35:39.082125091 +0200
+@@ -744,7 +744,7 @@
+ dnl --
+ AC_LANG_C
+ dnl do not add 'AC_DISABLE_SHARED' as pyecasound needs shared
+-5~dnl objects at link time (note that all the major libs are static)
++dnl objects at link time (note that all the major libs are static)
+ AC_PROG_LIBTOOL
+ AC_LANG_CPLUSPLUS
+ 
+--- ecasound-2.5.2/pyecasound/Makefile.am.orig	2007-08-25 15:52:26.000000000 +0200
++++ ecasound-2.5.2/pyecasound/Makefile.am	2008-08-29 20:59:36.866132633 +0200
+@@ -14,9 +14,9 @@
+ # ----------------------------------------------------------------------
+ 
+ if ECA_AM_DEBUG_MODE
+-ecasoundc_libs 			= -L$(top_builddir)/libecasoundc/.libs -lecasoundc_debug
++ecasoundc_libs 			= $(top_builddir)/libecasoundc/libecasoundc_debug.la
+ else
+-ecasoundc_libs 			= -L$(top_builddir)/libecasoundc/.libs -lecasoundc
++ecasoundc_libs 			= $(top_builddir)/libecasoundc/libecasoundc.la
+ endif
+ 
+ if ECA_AM_PYECASOUND_INSTALL
+@@ -27,10 +27,6 @@
+ 				$(DESTDIR)$(ECA_S_PYTHON_DLMODULES)/pyeca.py \
+ 				$(DESTDIR)$(ECA_S_PYTHON_DLMODULES)/ecacontrol.py
+ endif
+-if ECA_AM_PYECASOUND_CEXT
+-pyecasound_install_list2 = 	pyecasound.so
+-pyecasound_uninstall_list2 =   	$(DESTDIR)$(ECA_S_PYTHON_DLMODULES)/pyecasound.so
+-endif
+ 
+ INCLUDES 			= -I$(srcdir) \
+ 				-I$(top_srcdir)/libecasoundc \
+@@ -52,41 +48,32 @@
+ # source files
+ # ----------------------------------------------------------------------
+ 
++pythondir = $(ECA_S_PYTHON_DLMODULES)
+ if ECA_AM_PYECASOUND_CEXT
+-noinst_LTLIBRARIES 		= libpyecasound.la
++python_LTLIBRARIES 		= pyecasound.la
+ endif
+ 
+-libpyecasound_la_SOURCES	= pyecasound.c
++pyecasound_la_SOURCES	= pyecasound.c
+ 
+ # libtool options to build for dlopen
+-libpyecasound_la_LDFLAGS        = -avoid-version -export-dynamic
+-
+-if ECA_AM_PYECASOUND_CEXT
+-all: pyecasound.so
+-
+-pyecasound.so: pyecasound.lo
+-	$(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) ${libpyecasound_la_LDFLAGS} -shared -nostartfiles -o pyecasound.so pyecasound.lo ${top_builddir}/libecasoundc/ecasoundc_sa.lo
+-endif
++pyecasound_la_LDFLAGS = -module -avoid-version -export-dynamic
++pyecasound_la_LIBADD = $(top_builddir)/libecasoundc/libecasoundc.la
+ 
+ # ----------------------------------------------------------------------
+ # hooks
+ # ----------------------------------------------------------------------
+ 
+-if ECA_AM_PYECASOUND_CEXT
+-CLEANFILES=pyecasound.so
+-endif
+-
+ if ECA_AM_PYECASOUND_INSTALL
+-install-exec-hook: $(pyecasound_install_list1) $(pyecasound_install_list2)
++install-exec-hook: $(pyecasound_install_list1)
+ 	$(INSTALL) -d $(DESTDIR)$(ECA_S_PYTHON_DLMODULES)
+-	$(INSTALL) $(pyecasound_install_list1) $(pyecasound_install_list2) $(DESTDIR)$(ECA_S_PYTHON_DLMODULES)
++	$(INSTALL) $(pyecasound_install_list1) $(DESTDIR)$(ECA_S_PYTHON_DLMODULES)
+ else
+ install-exec-hook:
+ endif
+ 
+ if ECA_AM_PYECASOUND_INSTALL
+ uninstall-local:
+-	rm -f $(pyecasound_uninstall_list1) $(pyecasound_uninstall_list2)
++	rm -f $(pyecasound_uninstall_list1)
+ 	rmdir --ignore-fail-on-non-empty $(DESTDIR)$(ECA_S_PYTHON_DLMODULES)
+ else
+ uninstall-local:
