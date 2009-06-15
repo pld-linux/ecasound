@@ -1,28 +1,5 @@
---- ecasound-2.5.2/configure.in.orig	2008-08-24 09:48:18.000000000 +0200
-+++ ecasound-2.5.2/configure.in	2008-08-29 19:35:39.082125091 +0200
-@@ -744,7 +744,7 @@
- dnl --
- AC_LANG_C
- dnl do not add 'AC_DISABLE_SHARED' as pyecasound needs shared
--5~dnl objects at link time (note that all the major libs are static)
-+dnl objects at link time (note that all the major libs are static)
- AC_PROG_LIBTOOL
- AC_LANG_CPLUSPLUS
- 
---- ecasound-2.5.2/pyecasound/Makefile.am.orig	2007-08-25 15:52:26.000000000 +0200
-+++ ecasound-2.5.2/pyecasound/Makefile.am	2008-08-29 20:59:36.866132633 +0200
-@@ -14,9 +14,9 @@
- # ----------------------------------------------------------------------
- 
- if ECA_AM_DEBUG_MODE
--ecasoundc_libs 			= -L$(top_builddir)/libecasoundc/.libs -lecasoundc_debug
-+ecasoundc_libs 			= $(top_builddir)/libecasoundc/libecasoundc_debug.la
- else
--ecasoundc_libs 			= -L$(top_builddir)/libecasoundc/.libs -lecasoundc
-+ecasoundc_libs 			= $(top_builddir)/libecasoundc/libecasoundc.la
- endif
- 
- if ECA_AM_PYECASOUND_INSTALL
+--- ecasound-2.6.0/pyecasound/Makefile.am.orig	2009-01-18 10:35:50.000000000 +0100
++++ ecasound-2.6.0/pyecasound/Makefile.am	2009-06-15 12:28:42.320618248 +0200
 @@ -27,10 +27,6 @@
  				$(DESTDIR)$(ECA_S_PYTHON_DLMODULES)/pyeca.py \
  				$(DESTDIR)$(ECA_S_PYTHON_DLMODULES)/ecacontrol.py
@@ -45,7 +22,7 @@
  endif
  
 -libpyecasound_la_SOURCES	= pyecasound.c
-+pyecasound_la_SOURCES	= pyecasound.c
++pyecasound_la_SOURCES		= pyecasound.c
  
  # libtool options to build for dlopen
 -libpyecasound_la_LDFLAGS        = -avoid-version -export-dynamic
@@ -54,7 +31,7 @@
 -all: pyecasound.so
 -
 -pyecasound.so: pyecasound.lo
--	$(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) ${libpyecasound_la_LDFLAGS} -shared -nostartfiles -o pyecasound.so pyecasound.lo ${top_builddir}/libecasoundc/ecasoundc_sa.lo
+-	$(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) ${libpyecasound_la_LDFLAGS} -shared -nostartfiles -o pyecasound.so pyecasound.lo $(ecasoundc_libs)
 -endif
 +pyecasound_la_LDFLAGS = -module -avoid-version -export-dynamic
 +pyecasound_la_LIBADD = $(top_builddir)/libecasoundc/libecasoundc.la
