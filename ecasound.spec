@@ -30,6 +30,7 @@ BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 5.0
+BuildRequires:	rpm-pythonprov
 %if %{with ruby}
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
