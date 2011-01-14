@@ -8,25 +8,29 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl.UTF-8):	Oprogramowanie do wielościeżkowego przetwarzania dźwięku
 Name:		ecasound
-Version:	2.6.0
-Release:	3
+Version:	2.7.2
+Release:	1
 License:	GPL v2+
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	41f9445b9a9c0cde141831cb53d1ef8f
+# Source0-md5:	40498ceed9cc7622ee969c427f13921c
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-acam.patch
-URL:		http://ecasound.seul.org/
+URL:		http://www.eca.cx/ecasound/
 %{?with_alsa:BuildRequires:	alsa-lib-devel >= 0.9.0}
 %{?with_arts:BuildRequires:	arts-devel}
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1.6.1
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
 BuildRequires:	ladspa-devel
+BuildRequires:	liblo-devel
+BuildRequires:	liboil-devel >= 0.3
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel >= 1.0.12
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
+BuildRequires:	ncurses-devel
+BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules >= 2.2
 BuildRequires:	readline-devel >= 5.0
@@ -79,6 +83,8 @@ Requires:	%{name} = %{version}-%{release}
 %{?with_alsa:Requires:	alsa-lib-devel}
 %{?with_arts:Requires:	arts-devel}
 %{?with_jack:Requires:	jack-audio-connection-kit-devel}
+Requires:	liblo-devel
+Requires:	liboil-devel >= 0.3
 Requires:	libsamplerate-devel
 Requires:	libsndfile-devel
 Requires:	libstdc++-devel
@@ -182,10 +188,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc BUGS NEWS README TODO
+# COPYING is licensing note, not GPL/LGPL text
+%doc AUTHORS BUGS COPYING NEWS README TODO
 %attr(755,root,root) %{_bindir}/eca*
 %attr(755,root,root) %{_libdir}/libecasound.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecasound.so.20
+%attr(755,root,root) %ghost %{_libdir}/libecasound.so.22
 %attr(755,root,root) %{_libdir}/libecasoundc.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libecasoundc.so.1
 %attr(755,root,root) %{_libdir}/libkvutils.so.*.*.*

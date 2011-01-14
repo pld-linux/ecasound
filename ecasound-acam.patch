@@ -1,5 +1,5 @@
---- ecasound-2.6.0/pyecasound/Makefile.am.orig	2009-01-18 10:35:50.000000000 +0100
-+++ ecasound-2.6.0/pyecasound/Makefile.am	2009-06-15 12:28:42.320618248 +0200
+--- ecasound-2.7.2/pyecasound/Makefile.am.orig	2009-04-19 19:10:40.000000000 +0200
++++ ecasound-2.7.2/pyecasound/Makefile.am	2011-01-14 17:40:20.430361617 +0100
 @@ -27,10 +27,6 @@
  				$(DESTDIR)$(ECA_S_PYTHON_DLMODULES)/pyeca.py \
  				$(DESTDIR)$(ECA_S_PYTHON_DLMODULES)/ecacontrol.py
@@ -22,7 +22,7 @@
  endif
  
 -libpyecasound_la_SOURCES	= pyecasound.c
-+pyecasound_la_SOURCES		= pyecasound.c
++pyecasound_la_SOURCES	= pyecasound.c
  
  # libtool options to build for dlopen
 -libpyecasound_la_LDFLAGS        = -avoid-version -export-dynamic
@@ -33,7 +33,7 @@
 -pyecasound.so: pyecasound.lo
 -	$(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) ${libpyecasound_la_LDFLAGS} -shared -nostartfiles -o pyecasound.so pyecasound.lo $(ecasoundc_libs)
 -endif
-+pyecasound_la_LDFLAGS = -module -avoid-version -export-dynamic
++pyecasound_la_LDFLAGS        = -module -avoid-version -export-dynamic
 +pyecasound_la_LIBADD = $(top_builddir)/libecasoundc/libecasoundc.la
  
  # ----------------------------------------------------------------------
@@ -58,6 +58,6 @@
  uninstall-local:
 -	rm -f $(pyecasound_uninstall_list1) $(pyecasound_uninstall_list2)
 +	rm -f $(pyecasound_uninstall_list1)
- 	rmdir --ignore-fail-on-non-empty $(DESTDIR)$(ECA_S_PYTHON_DLMODULES)
+ 	rmdir $(DESTDIR)$(ECA_S_PYTHON_DLMODULES) || echo "Skipping non-empty directory"
  else
  uninstall-local:
