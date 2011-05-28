@@ -8,12 +8,12 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl.UTF-8):	Oprogramowanie do wielościeżkowego przetwarzania dźwięku
 Name:		ecasound
-Version:	2.7.2
+Version:	2.8.1
 Release:	1
 License:	GPL v2+
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	40498ceed9cc7622ee969c427f13921c
+# Source0-md5:	d9ded0074a8eeb59dd507c248220d010
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-acam.patch
 URL:		http://www.eca.cx/ecasound/
@@ -145,7 +145,7 @@ Moduł języka Ruby dla programu ecasound.
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
+CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
 # disable audiofile - ecasound has native support for wav and raw formats
 # disable oss       - ecasound works nicely with alsa oss emulation;
 #                     in case of alsa building conditional, the oss should
@@ -165,7 +165,9 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG} -I/usr/include/ncurses"
 	--with-python-includes=%{py_incdir} \
 	--with-python-modules=%{py_libdir}
 
-%{__make}
+%{__make} \
+	termcap_library_ncurses="-lncurses -ltinfo" \
+	ncurses_library="-lncurses -ltinfo"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -192,7 +194,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS BUGS COPYING NEWS README TODO
 %attr(755,root,root) %{_bindir}/eca*
 %attr(755,root,root) %{_libdir}/libecasound.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecasound.so.22
+%attr(755,root,root) %ghost %{_libdir}/libecasound.so.23
 %attr(755,root,root) %{_libdir}/libecasoundc.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libecasoundc.so.1
 %attr(755,root,root) %{_libdir}/libkvutils.so.*.*.*
