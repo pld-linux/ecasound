@@ -8,12 +8,12 @@
 Summary:	Software package for multitrack audio processing
 Summary(pl.UTF-8):	Oprogramowanie do wielościeżkowego przetwarzania dźwięku
 Name:		ecasound
-Version:	2.8.1
+Version:	2.9.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Sound
 Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	d9ded0074a8eeb59dd507c248220d010
+# Source0-md5:	05e7d4664cdf4c7a138c098e9506a551
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-acam.patch
 URL:		http://www.eca.cx/ecasound/
@@ -29,6 +29,8 @@ BuildRequires:	libsamplerate-devel
 BuildRequires:	libsndfile-devel >= 1.0.12
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
+BuildRequires:	lilv-devel >= 0.5.0
+BuildRequires:	lv2core-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2.2
@@ -39,6 +41,8 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
 %endif
+Requires:	libsndfile >= 1.0.12
+Requires:	lilv >= 0.5.0
 Obsoletes:	libecasound
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -88,6 +92,7 @@ Requires:	liboil-devel >= 0.3
 Requires:	libsamplerate-devel
 Requires:	libsndfile-devel
 Requires:	libstdc++-devel
+Requires:	lilv-devel >= 0.5.0
 Obsoletes:	libecasound-devel
 
 %description devel
@@ -171,7 +176,7 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{py_sitedir}
+#install -d $RPM_BUILD_ROOT%{py_sitedir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -180,7 +185,6 @@ install -d $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -191,14 +195,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 # COPYING is licensing note, not GPL/LGPL text
-%doc AUTHORS BUGS COPYING NEWS README TODO
+%doc AUTHORS BUGS COPYING NEWS README RELNOTES TODO
 %attr(755,root,root) %{_bindir}/eca*
 %attr(755,root,root) %{_libdir}/libecasound.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecasound.so.23
+%attr(755,root,root) %ghost %{_libdir}/libecasound.so.24
 %attr(755,root,root) %{_libdir}/libecasoundc.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libecasoundc.so.1
 %attr(755,root,root) %{_libdir}/libkvutils.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkvutils.so.4
+%attr(755,root,root) %ghost %{_libdir}/libkvutils.so.10
 %{_datadir}/ecasound
 %{_mandir}/man1/eca*.1*
 %{_mandir}/man5/ecasoundrc.5*
@@ -225,7 +229,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/pyecasound.so
 %{py_sitedir}/ecacontrol.py[co]
 %{py_sitedir}/eci.py[co]
 %{py_sitedir}/pyeca.py[co]
