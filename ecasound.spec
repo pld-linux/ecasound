@@ -16,6 +16,7 @@ Source0:	http://ecasound.seul.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	13c7be1e4eddc0bbf3792dc17777e465
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-acam.patch
+Patch2:		%{name}-ruby.patch
 URL:		http://www.eca.cx/ecasound/
 %{?with_alsa:BuildRequires:	alsa-lib-devel >= 0.9.0}
 %{?with_arts:BuildRequires:	arts-devel}
@@ -144,6 +145,7 @@ Moduł języka Ruby dla programu ecasound.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -166,6 +168,7 @@ CXXFLAGS="%{rpmcflags} -D_REENTRANT %{!?debug:-DNDEBUG}"
 	--enable-shared \
 	--enable-sys-readline \
 	--enable-pyecasound \
+	%{?with_ruby:--enable-rubyecasound} \
 	--with-largefile \
 	--with-python-includes=%{py_incdir} \
 	--with-python-modules=%{py_libdir}
@@ -236,5 +239,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with ruby}
 %files -n ruby-%{name}
 %defattr(644,root,root,755)
-%{ruby_sitelibdir}/ecasound.rb
+%{ruby_vendorlibdir}/ecasound.rb
 %endif

@@ -1,0 +1,12 @@
+diff -ruN ecasound-2.9.1.orig/configure.ac ecasound-2.9.1/configure.ac
+--- ecasound-2.9.1.orig/configure.ac	2014-01-03 11:34:07.000000000 +0100
++++ ecasound-2.9.1/configure.ac	2017-02-25 23:46:30.167878523 +0100
+@@ -749,7 +749,7 @@
+   rubyecasound_support=no
+   ECA_S_RUBY_SITEDIR=""
+ else
+-  ECA_S_RUBY_SITEDIR="`ruby -e 'require "rbconfig"; include Config; print CONFIG[["sitedir"]] + "/" + CONFIG[["MAJOR"]] + "." + CONFIG[["MINOR"]]'`"
++  ECA_S_RUBY_SITEDIR="`ruby -rrbconfig -e 'print RbConfig::CONFIG[["vendordir"]]'`"
+ fi
+ 
+ AC_SUBST(ECA_S_RUBY_SITEDIR)
